@@ -82,6 +82,14 @@ RSpec.describe 'Site Navigation' do
           end
         end
 
+        it "a link to the user registration page ('/register')" do
+          visit '/merchants'
+          within 'nav' do
+            click_link("Register")
+            expect(current_path).to eq("/register")
+          end
+        end
+
       end
     end
   end
