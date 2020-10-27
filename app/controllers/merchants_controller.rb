@@ -1,6 +1,4 @@
 class MerchantsController < ApplicationController
-  before_action :current_user?
-
   def index
     @merchants = Merchant.all
   end
@@ -46,9 +44,5 @@ class MerchantsController < ApplicationController
 
   def merchant_params
     params.permit(:name,:address,:city,:state,:zip)
-  end
-
-  def current_user?
-    render file: '/public/404' unless current_user
   end
 end
