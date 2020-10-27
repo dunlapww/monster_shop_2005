@@ -161,7 +161,7 @@ RSpec.describe 'Site Navigation' do
       visit '/merchants'
       expect(page).to have_link("Admin Dashboard")
       expect(page).to have_link("All Users")
-      expect(page).to_not have_link("Cart")
+      expect(page).to_not have_content("Cart")
     end
   end
 end
