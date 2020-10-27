@@ -22,4 +22,8 @@ class ApplicationController < ActionController::Base
   def current_user?
     render file: '/public/404' unless current_user
   end
+
+  def current_merchant?
+    render file: '/public/404' unless (current_user && current_user.merchant_employee?)
+  end
 end

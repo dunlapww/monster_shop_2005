@@ -166,18 +166,44 @@ RSpec.describe 'Site Navigation' do
   end
   
   describe 'as a visitor' do
-    it 'gives a 404 error when I navigate to ' do
+    it 'gives a 404 error when I navigate to  /admin' do
       visit '/admin'
       expect(page).to have_content("The page you were looking for doesn't exist") 
     end
 
-    it 'gives a 404 error when I navigate to do' do
+    it 'gives a 404 error when I navigate to do /merchant' do
       visit '/merchant'
       expect(page).to have_content("The page you were looking for doesn't exist") 
     end
 
     it 'gives a 404 error when I navigate to do' do
       visit '/profile'
+      expect(page).to have_content("The page you were looking for doesn't exist") 
+    end
+  end
+
+  describe 'as a user' do
+    before :each do
+      user = User.create!({password: "testpass",
+                             name: "testname",
+                             address: "testaddress",
+                             city: "testcity",
+                             state: "teststate",
+                             zip: "testzip",
+                             email_address: "testemail",
+                             password_confirmation: "testpass",
+                             role: 0})
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    end
+
+    it 'gives a 404 error when I go to /merchant' do
+      visit '/merchant'
+      expect(page).to have_content("The page you were looking for doesn't exist") 
+    end
+
+    it 'gives a 404 error when I go to /admin' do
+      visit '/admin'
       expect(page).to have_content("The page you were looking for doesn't exist") 
     end
   end

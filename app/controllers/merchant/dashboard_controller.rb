@@ -1,5 +1,5 @@
 class Merchant::DashboardController < ApplicationController
-  before_action :current_user?
+  before_action :current_merchant?
 
   def show
   end
