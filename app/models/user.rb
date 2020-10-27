@@ -12,5 +12,5 @@ class User < ApplicationRecord
   validates_presence_of :password_confirmation
 
   has_secure_password validations: false
-
+  enum role: %w(default merchant_employee admin)
 end
