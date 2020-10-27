@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates_presence_of :email_address, require: true
 
   validates_confirmation_of :password
+  validates_presence_of :password_confirmation
 
-  has_secure_password
+  has_secure_password validations: false
+
 end

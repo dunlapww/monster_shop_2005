@@ -1,15 +1,19 @@
 class UsersController < ApplicationController
   def new
-
+    @user = User.new
   end
 
   def create
-    new_user = User.new(user_params)
-    flash[:success] = "Thank you for logging in #{new_user.name}"
-    new_user.save
-    session[:user_id] = new_user.id
-
-    redirect_to "/profile"
+    @user = User.new(user_params)
+    if @user.save
+      flash[:success] = "Thank you for logging in #{@user.name}"
+      session[:user_id] = @user.id
+      redirect_to "/profile"
+    else
+      flash.now[:error] = @user.errors.full_messages.to_sentence
+      @user.email_address=nil
+      render action: "new"
+    end
   end
 
   def show
@@ -18,6 +22,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email_address, :password)
+    params[:user].permit(:name, :address, :city, :state, :zip, :email_address, :password, :password_confirmation)
   end
 end
