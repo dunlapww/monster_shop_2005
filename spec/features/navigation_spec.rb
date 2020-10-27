@@ -108,11 +108,13 @@ RSpec.describe 'Site Navigation' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     end
     it "Plus the following links" do
-      expect(page).to have_link("profile")
-      expect(page).to have_link("logout")
-      expect(page).to have_content("Hello #{@user1.name}!")
+      visit '/merchants'
+      expect(page).to have_link("Profile")
+      expect(page).to have_link("Log Out")
+      expect(page).to have_content("Logged in as #{@user1.name}")
     end
     it "Minus the following links" do
+      visit '/merchants'
       expect(page).to_not have_link "Log In"
       expect(page).to_not have_link "Register"
     end
