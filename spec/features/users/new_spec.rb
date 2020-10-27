@@ -18,7 +18,7 @@ describe "as a visitor" do
       fill_in :zip, with: "81620"
       fill_in :email_address, with: "joe@example.com"
       fill_in :password, with: "Joeisthebest!"
-      fill_in :confirm_password, with: "Joeisthebest!"
+      fill_in :password_confirmation, with: "Joeisthebest!"
 
       click_on("Submit")
 

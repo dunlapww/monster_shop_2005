@@ -4,8 +4,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    flash[:notice] = "Thank you for logging in #{user.name}"
+    user = User.new(user_params)
+    flash[:success] = "Thank you for logging in #{user.name}"
+    user.save
 
     redirect_to "/profile"
   end
