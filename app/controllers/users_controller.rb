@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    if User.find_by('lower(email_address) = ?', params[:email_address].downcase).nil?
+    if User.email_nil?(params[:email_address])
       new_user = User.new(user_params)
       if new_user.save
         flash[:success] = "Thank you for logging in #{new_user.name}"
