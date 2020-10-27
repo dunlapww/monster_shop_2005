@@ -105,18 +105,42 @@ RSpec.describe 'Site Navigation' do
                              password_confirmation: "testpass",
                              role: 0})
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     end
+
     it "Plus the following links" do
       visit '/merchants'
       expect(page).to have_link("Profile")
       expect(page).to have_link("Log Out")
       expect(page).to have_content("Logged in as #{@user1.name}")
     end
+    
     it "Minus the following links" do
       visit '/merchants'
       expect(page).to_not have_link "Log In"
       expect(page).to_not have_link "Register"
+    end
+  end
+
+  describe 'As a merchant employee' do
+    it 'has a link to my merchant dashboard' do
+      user = User.create!({password: "testpass",
+                             name: "testname",
+                             address: "testaddress",
+                             city: "testcity",
+                             state: "teststate",
+                             zip: "testzip",
+                             email_address: "testemail",
+                             password_confirmation: "testpass",
+                             role: 1})
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit '/merchants'
+      expect(page).to have_link("Profile")
+      expect(page).to have_link("Log Out")
+      expect(page).to have_content("Logged in as #{user.name}")
+      expect(page).to have_link('Merchant Dashboard')
     end
   end
 end
