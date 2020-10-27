@@ -11,14 +11,14 @@ describe "as a visitor" do
 
       expect(current_path).to eq("/register")
 
-      fill_in :name, with: "Joe"
-      fill_in :address, with: "123 Joe St."
-      fill_in :city, with: "Joesville"
-      fill_in :state, with: "KY"
-      fill_in :zip, with: "81620"
-      fill_in :email_address, with: "joe@example.com"
-      fill_in :password, with: "Joeisthebest!"
-      fill_in :password_confirmation, with: "Joeisthebest!"
+      fill_in "user_name", with: "Joe"
+      fill_in "user_address", with: "123 Joe St."
+      fill_in "user_city", with: "Joesville"
+      fill_in "user_state", with: "KY"
+      fill_in "user_zip", with: "81620"
+      fill_in "user_email_address", with: "joe@example.com"
+      fill_in "user_password", with: "Joeisthebest!"
+      fill_in "user_password_confirmation", with: "Joeisthebest!"
 
       click_on("Submit")
 
@@ -31,30 +31,28 @@ describe "as a visitor" do
     describe "And I do not fill in this form completely," do
       it "I am returned to the registration page and told i did something wrong" do
         visit('/register')
-        fill_in :name, with: "Joe"
-        fill_in :address, with: "123 Joe St."
-        fill_in :city, with: "Joesville"
-        fill_in :state, with: "KY"
-        fill_in :zip, with: "81620"
-        fill_in :password, with: "Joeisthebest!"
-        fill_in :password_confirmation, with: "Joeisthebest!"
+        fill_in "user_name", with: "Joe"
+        fill_in "user_address", with: "123 Joe St."
+        fill_in "user_city", with: "Joesville"
+        fill_in "user_state", with: "KY"
+        fill_in "user_zip", with: "81620"
+        fill_in "user_password", with: "Joeisthebest!"
+        fill_in "user_password_confirmation", with: "Joeisthebest!"
         click_on("Submit")
-        expect(page).to have_content("User not created, missing required field inputs")
-        expect(current_path).to eq("/register")
+        expect(page).to have_content("Email address can't be blank")
       end
 
       it "I am returned to the registration page and told i did something wrong" do
         visit('/register')
-        fill_in :name, with: "Joe"
-        fill_in :address, with: "123 Joe St."
-        fill_in :city, with: "Joesville"
-        fill_in :state, with: "KY"
-        fill_in :zip, with: "81620"
-        fill_in :email_address, with: "joe@example.com"
-        fill_in :password, with: "Joeisthebest!"
+        fill_in "user_name", with: "Joe"
+        fill_in "user_address", with: "123 Joe St."
+        fill_in "user_city", with: "Joesville"
+        fill_in "user_state", with: "KY"
+        fill_in "user_zip", with: "81620"
+        fill_in "user_email_address", with: "joe@example.com"
+        fill_in "user_password", with: "Joeisthebest!"
         click_on("Submit")
-        expect(page).to have_content("User not created, missing required field inputs")
-        expect(current_path).to eq("/register")
+        expect(page).to have_content("Password confirmation doesn't match Password")
       end
     end
   end
@@ -77,17 +75,23 @@ describe "as a visitor" do
                 password_confirmation: "Jamesisthebest!"})
 
                 visit('/register')
-                fill_in :name, with: "Jim"
-                fill_in :address, with: "123 Jim St."
-                fill_in :city, with: "Jimsville"
-                fill_in :state, with: "KY"
-                fill_in :zip, with: "81620"
-                fill_in :email_address, with: "james@example.com"
-                fill_in :password, with: "Jimisthebest!"
-                fill_in :password_confirmation, with: "Jimisthebest!"
+
+                fill_in "user_name", with: "Jim"
+                fill_in "user_address", with: "123 Jim St."
+                fill_in "user_city", with: "Jimsville"
+                fill_in "user_state", with: "KY"
+                fill_in "user_zip", with: "81620"
+                fill_in "user_email_address", with: "james@example.com"
+                fill_in "user_password", with: "Jimisthebest!"
+                fill_in "user_password_confirmation", with: "Jimisthebest!"
 
                 click_on("Submit")
-                expect(page).to have_content("E-mail already taken, please input another!")
+                expect(page).to have_content("Email address has already been taken")
+                expect(page).to have_field 'user[name]', with: "Jim"
+                expect(page).to have_field 'user[address]', with: "123 Jim St."
+                expect(page).to have_field 'user[city]', with: "Jimsville"
+                expect(page).to have_field 'user[state]', with: "KY"
+                expect(page).to have_field 'user[zip]', with: "81620"
               end
             end
           end
