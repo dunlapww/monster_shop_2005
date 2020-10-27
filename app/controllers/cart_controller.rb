@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :current_admin?, only: :show
+
   def add_item
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
@@ -19,6 +21,4 @@ class CartController < ApplicationController
     session[:cart].delete(params[:item_id])
     redirect_to '/cart'
   end
-
-
 end
