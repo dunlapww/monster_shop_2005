@@ -4,11 +4,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
-    flash[:success] = "Thank you for logging in #{user.name}"
-    user.save
+    new_user = User.new(user_params)
+    flash[:success] = "Thank you for logging in #{new_user.name}"
+    new_user.save
+    session[:user_id] = new_user.id
 
     redirect_to "/profile"
+  end
+
+  def show
+    @user = User.find(session[:user_id])
   end
 
   private
