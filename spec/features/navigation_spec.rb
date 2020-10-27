@@ -143,4 +143,25 @@ RSpec.describe 'Site Navigation' do
       expect(page).to have_link('Merchant Dashboard')
     end
   end
+
+  describe 'As an admin' do
+    it 'has links to an admin dashboard and to all users' do
+      user = User.create!({password: "testpass",
+                             name: "testname",
+                             address: "testaddress",
+                             city: "testcity",
+                             state: "teststate",
+                             zip: "testzip",
+                             email_address: "testemail",
+                             password_confirmation: "testpass",
+                             role: 2})
+      
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit '/merchants'
+      expect(page).to have_link("Admin Dashboard")
+      expect(page).to have_link("All Users")
+      expect(page).to_not have_link("Cart")
+    end
+  end
 end
