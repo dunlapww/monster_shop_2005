@@ -4,14 +4,19 @@ class UsersController < ApplicationController
   end
 
   def create
-    new_user = User.new(user_params)
-    if new_user.save
-      flash[:success] = "Thank you for logging in #{new_user.name}"
-      session[:user_id] = new_user.id
-      redirect_to "/profile"
+    if User.find_by('lower(email_address) = ?', params[:email_address].downcase).nil?
+      new_user = User.new(user_params)
+      if new_user.save
+        flash[:success] = "Thank you for logging in #{new_user.name}"
+        session[:user_id] = new_user.id
+        redirect_to "/profile"
+      else
+        flash[:error] = "User not created, missing required field inputs"
+        redirect_to '/register'
+      end
     else
-      flash[:error] = "User not created, missing required field inputs"
-      redirect_to '/register'
+      flash[:error] = "E-mail already taken, please input another!"
+      render :new
     end
   end
 
