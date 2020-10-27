@@ -13,8 +13,4 @@ class User < ApplicationRecord
 
   has_secure_password validations: false
 
-  def self.email_nil?(params)
-    find_by('lower(email_address) = ?', params.downcase).nil?
-  end
-
 end
