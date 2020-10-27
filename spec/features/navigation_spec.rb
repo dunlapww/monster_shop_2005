@@ -34,7 +34,7 @@ RSpec.describe 'Site Navigation' do
 
     end
     # User Story 2, Visitor Navigation
-  
+
     # As a visitor
     # I see a navigation bar
     # This navigation bar includes links for the following:
@@ -44,7 +44,7 @@ RSpec.describe 'Site Navigation' do
     # - a link to my shopping cart ("/cart")
     # - a link to log in ("/login")
     # - a link to the user registration page ("/register")
-  
+
     # Next to the shopping cart link I see a count of the items in my cart
 
     describe 'As a vistor' do
@@ -65,7 +65,7 @@ RSpec.describe 'Site Navigation' do
             expect(current_path).to eq("/items")
           end
         end
-        
+
         it "a link to my shopping cart ('/cart')" do
           visit '/merchants'
           within 'nav' do
@@ -89,8 +89,32 @@ RSpec.describe 'Site Navigation' do
             expect(current_path).to eq("/register")
           end
         end
-
       end
+    end
+  end
+  #User Story 3, User Navigation
+  describe "I see the same links as a visitor" do
+    before(:each) do
+      @user1 = User.create!({password: "testpass",
+                             name: "testname",
+                             address: "testaddress",
+                             city: "testcity",
+                             state: "teststate",
+                             zip: "testzip",
+                             email_address: "testemail",
+                             password_confirmation: "testpass",
+                             role: 0})
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+    end
+    it "Plus the following links" do
+      expect(page).to have_link("profile")
+      expect(page).to have_link("logout")
+      expect(page).to have_content("Hello #{@user1.name}!")
+    end
+    it "Minus the following links" do
+      expect(page).to_not have_link "Log In"
+      expect(page).to_not have_link "Register"
     end
   end
 end
