@@ -49,3 +49,31 @@ describe Item, type: :model do
     end
   end
 end
+describe "class methods for Item" do
+  before(:each) do
+    merchant = create(:merchant)
+    @items = create_list(:item, 10, merchant: merchant)
+    orders = create_list(:order, 10)
+    create(:item_order, quantity: 10, item: @items[0])
+    create(:item_order, quantity: 15, item: @items[1])
+    create(:item_order, quantity: 20, item: @items[2])
+    create(:item_order, quantity: 25, item: @items[3])
+    create(:item_order, quantity: 26, item: @items[4])
+    create(:item_order, quantity: 1, item: @items[5])
+    create(:item_order, quantity: 13, item: @items[6])
+    create(:item_order, quantity: 30, item: @items[6])
+    create(:item_order, quantity: 40, item: @items[8])
+    create(:item_order, quantity: 100, item: @items[9])
+    create(:item_order, quantity: 200, item: @items[7])
+  end
+  it ".most popular" do
+    expect(Item.most_popular.length).to eq(5)
+    expect(Item.most_popular.first.name).to eq(@items[7].name)
+    expect(Item.most_popular.last.name).to eq(@items[4].name)
+  end
+  it ".least popular" do
+    expect(Item.least_popular.length).to eq(5)
+    expect(Item.least_popular.first.name).to eq(@items[5].name)
+    expect(Item.least_popular.last.name).to eq(@items[3].name)
+  end
+end
