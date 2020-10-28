@@ -62,5 +62,16 @@ describe 'as a visitor' do
       expect(current_path).to eq("/merchant")
       expect(page).to have_content("Thank you for logging in #{@merchant.name}")
     end
+
+    it "as a admin, I see a field to enter my email and password" do
+      visit '/login'
+
+      fill_in :email_address, with: @admin.email_address
+      fill_in :password, with: @admin.password
+
+      click_on("Log In")
+      expect(current_path).to eq("/admin")
+      expect(page).to have_content("Thank you for logging in #{@admin.name}")
+    end
   end
 end
