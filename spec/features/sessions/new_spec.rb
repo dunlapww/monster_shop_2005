@@ -94,5 +94,29 @@ describe 'as a visitor' do
       expect(page).to have_field(:password)
       
     end
+
+    describe "and I'm already logged in:" do
+      it "as a user, i'm redirected to /profile" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @user.id}}
+        visit '/login'
+        
+        expect(current_path).to eq('/profile')
+      end
+      
+      it "as a merchant, i'm redirected to /merchant" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant.id}}
+        visit '/login'
+        expect(current_path).to eq('/merchant')
+      end
+      
+      it "as a admin, i'm redirected to /admin" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @admin.id}}
+        visit '/login'
+        expect(current_path).to eq('/admin')
+      end
+    end
   end
 end
