@@ -39,12 +39,12 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
   get "/login", to: "sessions#new"
-
+  post "/login", to: "sessions#create"
+  #users
   get "/register", to: "users#new"
-
   post "/users", to: "users#create"
-
   get "/profile", to: "users#show"
+
 
   get '/admin', to: 'admin#show'
 end

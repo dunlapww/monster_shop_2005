@@ -74,6 +74,15 @@ describe 'as a visitor' do
       expect(page).to have_content("Thank you for logging in #{@admin.name}")
     end
     
-    
+    it "as any user, if I login with bad credentials, I returned to login page" do
+      visit '/login'
+
+      fill_in :email_address, with: "bademail"
+      fill_in :password, with: @admin.password
+
+      click_on("Log In")
+      expect(current_path).to eq("/login")
+      expect(page).to_not have_content("Thank you for logging in #{@admin.name}")
+    end
   end
 end
