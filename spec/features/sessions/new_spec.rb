@@ -49,7 +49,7 @@ describe 'as a visitor' do
 
       click_on("Log In")
       expect(current_path).to eq("/profile")
-      expect(page).to have_content("I'm logged in")
+      expect(page).to have_content("Thank you for logging in #{@user.name}")
     end
   end
 end
