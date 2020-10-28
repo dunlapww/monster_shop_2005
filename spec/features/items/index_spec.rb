@@ -19,8 +19,6 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      expect(page).to have_link(@dog_bone.name)
-      expect(page).to have_link(@dog_bone.merchant.name)
     end
 
     it "I can see a list of all of the items "do
@@ -47,15 +45,20 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_content(@dog_bone.description)
-        expect(page).to have_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_content("Inactive")
-        expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_link(@brian.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      end
+    end
+    it "I see all items in the system except disabled items and the item image is a link to that item's show page" do
+      visit '/items'
+
+      expect(page).to have_no_content(@dog_bone.name)
+      expect(page).to have_no_content(@dog_bone.description)
+      expect(page).to have_no_content("Price: $#{@dog_bone.price}")
+      expect(page).to have_no_content("Inactive")
+      expect(page).to have_no_content("Inventory: #{@dog_bone.inventory}")
+      expect(page).to have_no_css("img[src*='#{@dog_bone.image}']")
+
+      find(:xpath, "//a[contains(@id,'image-#{@pull_toy.id}')]").click
+
+      expect(current_path).to eq("/items/#{@pull_toy.id}")
     end
   end
 end
