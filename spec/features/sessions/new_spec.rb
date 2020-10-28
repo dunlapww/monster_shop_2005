@@ -41,7 +41,7 @@ describe 'as a visitor' do
                              role: 2})
 
     end
-    it "I see a field to enter my email and password" do
+    it "as a user, I see a field to enter my email and password" do
       visit '/login'
 
       fill_in :email_address, with: @user.email_address
@@ -50,6 +50,17 @@ describe 'as a visitor' do
       click_on("Log In")
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Thank you for logging in #{@user.name}")
+    end
+
+    it "as a merchant, I see a field to enter my email and password" do
+      visit '/login'
+
+      fill_in :email_address, with: @merchant.email_address
+      fill_in :password, with: @merchant.password
+
+      click_on("Log In")
+      expect(current_path).to eq("/merchant")
+      expect(page).to have_content("Thank you for logging in #{@merchant.name}")
     end
   end
 end
