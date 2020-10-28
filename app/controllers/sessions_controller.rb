@@ -20,4 +20,12 @@ class SessionsController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    session[:user_id] = nil
+    session[:cart] = Hash.new(0)
+    @current_user = nil
+    flash[:success] = 'You have successfully logged out!'
+    redirect_to '/'
+  end
 end
