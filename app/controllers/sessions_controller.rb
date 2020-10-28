@@ -22,11 +22,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    require 'pry'; binding.pry
     session[:user_id] = nil
-    session[:cart] = Hash.new
+    session[:cart] = Hash.new(0)
     @current_user = nil
-    flash.now[:success] = 'You have successfully logged out!'
-    redirect_to '/'    
+    flash[:success] = 'You have successfully logged out!'
+    redirect_to '/'
   end
 end
