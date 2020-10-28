@@ -46,6 +46,7 @@ RSpec.describe "Items Index Page" do
       end
 
     end
+
     it "I see all items in the system except disabled items and the item image is a link to that item's show page" do
       visit '/items'
 
@@ -59,6 +60,43 @@ RSpec.describe "Items Index Page" do
       find(:xpath, "//a[contains(@id,'image-#{@pull_toy.id}')]").click
 
       expect(current_path).to eq("/items/#{@pull_toy.id}")
+    end
+
+    it "I see an area with statistics including the top 5 most popular items and 5 least popular" do
+      merchant = create(:merchant)
+      items = create_list(:item, 10, merchant: merchant)
+      orders = create_list(:order, 10)
+      create(:item_order, quantity: 10, item: items[0])
+      create(:item_order, quantity: 15, item: items[1])
+      create(:item_order, quantity: 20, item: items[2])
+      create(:item_order, quantity: 25, item: items[3])
+      create(:item_order, quantity: 26, item: items[4])
+      create(:item_order, quantity: 1, item: items[5])
+      create(:item_order, quantity: 13, item: items[6])
+      create(:item_order, quantity: 30, item: items[6])
+      create(:item_order, quantity: 40, item: items[8])
+      create(:item_order, quantity: 100, item: items[9])
+      create(:item_order, quantity: 200, item: items[7])
+
+      visit '/items'
+
+      within("#most-popular") do
+        expect(page).to have_content("Most Popular 5 Items:")
+        expect(page.all('li')[0]).to have_content(items[7].name)
+        expect(page.all('li')[1]).to have_content(items[9].name)
+        expect(page.all('li')[2]).to have_content(items[6].name)
+        expect(page.all('li')[3]).to have_content(items[8].name)
+        expect(page.all('li')[4]).to have_content(items[4].name)
+      end
+
+      within("#least-popular") do
+        expect(page).to have_content("Least Popular 5 Items:")
+        expect(page.all('li')[0]).to have_content(items[5].name)
+        expect(page.all('li')[1]).to have_content(items[0].name)
+        expect(page.all('li')[2]).to have_content(items[1].name)
+        expect(page.all('li')[3]).to have_content(items[2].name)
+        expect(page.all('li')[4]).to have_content(items[3].name)
+      end
     end
   end
 end
