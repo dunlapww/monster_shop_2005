@@ -118,5 +118,23 @@ describe 'as a visitor' do
         expect(current_path).to eq('/admin')
       end
     end
+    
+    it "after I've logged in, I can log out" do
+      @new_merchant = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @tire = @new_merchant.items.create!(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @pull_toy = @new_merchant.items.create!(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      
+      # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+      # allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant.id, cart: {@tire.name => @tire.id, @pull_toy.name => @pull_toy.id}}}
+      
+      
+      visit '/merchants'
+      expect(page).to have_content("Cart: 2")
+      click_link('Log Out')
+      expect(current_path).to eq('/')
+      expect(page).to have_content("You have successfully logged out")
+      expect(page).to have_content("Cart: 0")
+      
+    end
   end
 end
