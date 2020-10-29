@@ -53,7 +53,7 @@ feature "edit user" do
         end
 
         it 'And I see a flash message telling me that my data is updated, And I see my updated information' do
-          expect(page).to have_content("You're profile has been updated!")
+          expect(page).to have_content("Your profile has been updated!")
           expect(page).to have_content("BOBname")
           expect(page).to have_content("BOBaddress")
           expect(page).to have_content("BOBcity")
