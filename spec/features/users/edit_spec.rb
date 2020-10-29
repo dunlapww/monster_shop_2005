@@ -64,4 +64,34 @@ feature "edit user" do
       end
     end
   end
+  #User Story 21, User Can Edit their Password
+  describe "When I visit my profile page" do
+    before(:each) do
+      page.set_rack_session(user_id: user.id)
+    end
+    it "I see a link to edit my password" do
+      visit "/profile"
+      expect(page).to have_link("Edit Password")
+    end
+    describe "When I click on the link to edit my password" do
+      it "I see a form with fields for a new password, and a new password confirmation" do
+        visit "/profile"
+        click_on('Edit Password')
+        expect(current_path).to eq("/profile/edit_password")
+        expect(page).to have_field("user_password")
+        expect(page).to have_field("user_password_confirmation")
+      end
+    end
+    describe "When I fill in the same password in both fields" do
+      describe "And I submit the form" do
+        describe "Then I am returned to my profile page" do
+          it "And I see a flash message telling me that my password is updated" do
+            fill_in 'user_password', with: 'NewPassword'
+            fill_in 'user_password_confirmation', with: 'NewPassword'
+            click_on("Submit")
+          end
+        end
+      end
+    end
+  end
 end
