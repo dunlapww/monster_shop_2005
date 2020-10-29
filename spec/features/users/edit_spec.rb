@@ -98,8 +98,9 @@ feature "edit user" do
             fill_in 'user_password', with: 'NewPassword'
             fill_in 'user_password_confirmation', with: 'NewPass'
             click_on("Submit")
-            expect(current_path).to eq("/profile/edit_password")
-            expect(page).to have_content("Passwords must match")
+            expect(page).to have_content("Password confirmation doesn't match Password")
+            expect(page).to have_field("user_password")
+            expect(page).to have_field("user_password_confirmation")
           end
         end
       end

@@ -4,15 +4,19 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    user = User.find(session[:user_id])
-    user.update(password_params)
-    flash[:success] = "Your password has been updated"
-    redirect_to '/profile'
+    @user = User.find(session[:user_id])
+    if @user.update(password_params)
+      flash[:success] = "Your password has been updated"
+      redirect_to '/profile'
+    else
+      flash[:error] = @user.errors.full_messages.to_sentence
+      render :edit
+    end
   end
 
   private
 
   def password_params
-    params.permit(:password, :password_confirmation)
+    params[:user].permit(:password, :password_confirmation)
   end
 end
