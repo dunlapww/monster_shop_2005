@@ -11,7 +11,6 @@ describe 'As a registered user' do
                          email_address: "useremail",
                          password_confirmation: "userpass",
                          role: 0})
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @user.id}}
   end
   describe 'When I visit my profile page' do
