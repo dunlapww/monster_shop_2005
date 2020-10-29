@@ -26,17 +26,17 @@ describe 'As a registered user' do
       it 'I see a form like the registration page' do
         visit "/profile"
         click_link("Edit Profile")
-        expect(current_path).to eq("users/#{@user.id}/edit")
+        expect(current_path).to eq("/profile/edit")
       end
 
       it 'The form is prepopulated with all my current information except my password' do
-        visit "users/#{@user.id}/edit"
-        expect(page).to have_field('user_name'), with: @user.name
-        expect(page).to have_field('user_address'), with: @user.address
-        expect(page).to have_field('user_city'), with: @user.city
-        expect(page).to have_field('user_state'), with: @user.state
-        expect(page).to have_field('user_zip'), with: @user.zip
-        expect(page).to have_field('user_email_address'), with: @user.email_address
+        visit "/profile/edit"
+        expect(page).to have_field 'user_name', with: @user.name
+        expect(page).to have_field 'user_address', with: @user.address
+        expect(page).to have_field 'user_city', with: @user.city
+        expect(page).to have_field 'user_state', with: @user.state
+        expect(page).to have_field 'user_zip', with: @user.zip
+        expect(page).to have_field 'user_email_address', with: @user.email_address
       end
     end
   end
@@ -44,13 +44,13 @@ describe 'As a registered user' do
   describe 'When I change any or all of that information' do
 
     before(:each) do
-      visit "users/#{@user.id}/edit"
-      fill_in 'user_name', with: 'BOB'
-      fill_in 'user_address', with: 'BOB'
-      fill_in 'user_city', with: 'BOB'
-      fill_in 'user_state', with: 'BOB'
-      fill_in 'user_zip', with: 'BOB'
-      fill_in 'user_email_address', with: 'BOB'
+      visit "/profile/edit"
+      fill_in 'user_name', with: 'BOBname'
+      fill_in 'user_address', with: 'BOBaddress'
+      fill_in 'user_city', with: 'BOBcity'
+      fill_in 'user_state', with: 'BOBstate'
+      fill_in 'user_zip', with: 'BOBzip'
+      fill_in 'user_email_address', with: 'BOBemail'
       click_on('Submit')
     end
 
@@ -60,7 +60,13 @@ describe 'As a registered user' do
       end
 
       it 'And I see a flash message telling me that my data is updated, And I see my updated information' do
-        expect(page).to have_content('')
+        expect(page).to have_content('User Profile Updated!')
+        expect(page).to have_content("BOBname")
+        expect(page).to have_content("BOBaddress")
+        expect(page).to have_content("BOBcity")
+        expect(page).to have_content("BOBstate")
+        expect(page).to have_content("BOBzip")
+        expect(page).to have_content("BOBemail")
       end
     end
   end
