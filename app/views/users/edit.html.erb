@@ -1,4 +1,4 @@
-<%= form_for(@user, url: "/users", :method=>'post', :id => 'user_new') do |f| %>
+<%= form_for(@user, url: "/users", :method=>'patch', :id => 'user_edit') do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %><br>
   <%= f.label :address %>
@@ -11,9 +11,5 @@
   <%= f.text_field :zip %><br>
   <%= f.label :email_address %>
   <%= f.text_field :email_address %><br>
-  <%= f.label :password %>
-  <%= f.password_field :password%><br>
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %><br>
   <%= f.submit "Submit" %>
 <% end %>
