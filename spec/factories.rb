@@ -17,6 +17,18 @@ FactoryBot.define do
     sequence(:zip) {|n| "Zip: #{n}"}
   end
 
+  factory :user do
+    sequence(:name) {|n| "Merchant Name: #{n}" }
+    sequence(:address) {|n| "Merchant Address: #{n}"}
+    sequence(:city) {|n| "City: #{n}"}
+    sequence(:state) {|n| "State: #{n}"}
+    sequence(:zip) {|n| "Zip: #{n}"}
+    sequence(:email_address) {|n| "email@email.com"}
+    sequence(:password) {|n| "123whollysmokes"}
+    sequence(:password_confirmation) {|n| "123whollysmokes"}
+
+  end
+
   factory :item_order do
     order
     item

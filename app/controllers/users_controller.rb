@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.find(session[:user_id])
     @user.update(user_params)
     if @user.save
-      flash[:success] = "User Profile Updated!"
+      flash[:success] = "You're profile has been updated!"
       redirect_to '/profile'
     else
       flash.now[:error] = @user.errors.full_messages.to_sentence
