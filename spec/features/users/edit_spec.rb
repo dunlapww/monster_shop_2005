@@ -86,9 +86,20 @@ feature "edit user" do
       describe "And I submit the form" do
         describe "Then I am returned to my profile page" do
           it "And I see a flash message telling me that my password is updated" do
+            visit "/profile/edit_password"
             fill_in 'user_password', with: 'NewPassword'
             fill_in 'user_password_confirmation', with: 'NewPassword'
             click_on("Submit")
+            expect(current_path).to eq("/profile")
+          end
+
+          it "If I input passwords that don't match I am given an error and returned to the same page" do;
+            visit "/profile/edit_password"
+            fill_in 'user_password', with: 'NewPassword'
+            fill_in 'user_password_confirmation', with: 'NewPass'
+            click_on("Submit")
+            expect(current_path).to eq("/profile/edit_password")
+            expect(page).to have_content("Passwords must match")
           end
         end
       end
