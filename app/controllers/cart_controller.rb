@@ -21,4 +21,19 @@ class CartController < ApplicationController
     session[:cart].delete(params[:item_id])
     redirect_to '/cart'
   end
+
+  def increment_item
+    item = Item.find(params[:item_id])
+    cart.add_item(item.id.to_s)
+    redirect_to '/cart'
+  end
+
+  def decrement_item
+    item = Item.find(params[:item_id])
+    cart.subtract_item(item.id.to_s) 
+    if cart.contents[item.id.to_s].zero?
+      session[:cart].delete(params[:item_id])
+    end
+    redirect_to '/cart'
+  end
 end

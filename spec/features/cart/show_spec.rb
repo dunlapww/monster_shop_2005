@@ -55,8 +55,31 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it 'has a link to increment and decrement the number of that item in the cart' do
+        visit '/cart'
+        @items_in_cart.each do |item|
+          within "#cart-item-#{item.id}" do
+            expect(page).to have_link("+")
+            expect(page).to have_link("-")
+          end
+        end
+
+        within "#cart-item-#{@pencil.id}" do
+          click_link("+")
+          expect(page).to have_content("2")
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("1")
+          click_link("-")
+        end
+        
+        expect(page).to_not have_content(@tire.name)
+      end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
@@ -69,7 +92,6 @@ RSpec.describe 'Cart show' do
         visit '/cart'
         expect(page).to_not have_link("Empty Cart")
       end
-
     end
   end
 end
