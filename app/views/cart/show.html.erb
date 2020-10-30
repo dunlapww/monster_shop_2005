@@ -16,26 +16,28 @@
         <p align = "center">
           <span>
             <img align = "center" id="cart-image" src= <%= item.image %>>
-            <%=link_to item.name, "/items/#{item.id}" %>
+            <%= link_to item.name, "/items/#{item.id}" %>
           </span>
         </p>
       </td>
       <td>
         <p align = "center">
-          <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}"%>
+          <%= link_to item.merchant.name, "/merchants/#{item.merchant.id}"%>
         </p>
       </td>
       <td>
-        <p><%=number_to_currency(item.price)%></p>
+        <p><%= number_to_currency(item.price)%></p>
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
+          <p><%= quantity %></p>
+          <%= link_to "+", "/cart/#{item.id}/add", method: :patch %>
+          <%= link_to "-", "/cart/#{item.id}/subtract", method: :patch %>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
         </td>
       <td>
-        <p><%=number_to_currency(cart.subtotal(item))%></p>
+        <p><%= number_to_currency(cart.subtotal(item)) %></p>
     </td>
     </tr>
   <% end %>
