@@ -1,7 +1,10 @@
 class OrdersController <ApplicationController
 
   def new
-
+    if session[:user_id].nil?
+      flash[:error] = "You must #{view_context.link_to "log in", '/login'} or #{view_context.link_to "register" , '/register'}"
+      redirect_to '/login'
+    end
   end
 
   def show
