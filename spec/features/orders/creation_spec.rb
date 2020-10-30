@@ -1,3 +1,4 @@
+require 'rails_helper'
 # When I fill out all information on the new order page
 # And click on 'Create Order'
 # An order is created and saved in the database
@@ -6,9 +7,11 @@
 # - Details of the order:
 
 # - the date when the order was created
-RSpec.describe("Order Creation") do
+feature "Order Creation" do
+  given!(:user) { create(:user, email_address: 'jack@daniels.com') }
   describe "When I check out from my cart" do
     before(:each) do
+      page.set_rack_session(user_id: user.id)
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
