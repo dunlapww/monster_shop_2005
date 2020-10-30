@@ -1,8 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Cart show' do
+feature 'Cart show' do
   describe 'When I have added items to my cart' do
+    given!(:user) { create(:user, email_address: 'jack@daniels.com') }
     before(:each) do
+      page.set_rack_session(user_id: user.id)
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
