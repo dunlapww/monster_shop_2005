@@ -10,6 +10,7 @@ RSpec.describe 'Cart show' do
         @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
         @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+        @pencil_cool = @mike.items.create(name: "Cool Pencil", description: "You can write on paper with it and look cool!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 1)
         visit "/items/#{@paper.id}"
         click_on "Add To Cart"
         visit "/items/#{@tire.id}"
@@ -57,6 +58,7 @@ RSpec.describe 'Cart show' do
       end
 
       it 'has a link to increment and decrement the number of that item in the cart' do
+
         visit '/cart'
         @items_in_cart.each do |item|
           within "#cart-item-#{item.id}" do
@@ -74,8 +76,18 @@ RSpec.describe 'Cart show' do
           expect(page).to have_content("1")
           click_link("-")
         end
-        
+
         expect(page).to_not have_content(@tire.name)
+      end
+      it "I add more than the inventory of the item" do
+        visit "/items/#{@pencil_cool.id}"
+        click_on "Add To Cart"
+        visit '/cart'
+        within "#cart-item-#{@pencil_cool.id}" do
+          click_link("+")
+          expect(page).to have_content("1")
+        end
+        expect(page).to have_content("Quantity cannot exceed item inventory")
       end
 
       it "when I click checkout and Im not logged in I get an error message to register or log in" do
