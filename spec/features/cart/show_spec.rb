@@ -77,6 +77,14 @@ RSpec.describe 'Cart show' do
         
         expect(page).to_not have_content(@tire.name)
       end
+
+      it "when I click checkout and Im not logged in I get an error message to register or log in" do
+        visit '/cart'
+        click_link 'Checkout'
+        expect(page).to have_content("You must log in or register")
+        expect(page).to have_link("register")
+        expect(page).to have_link("log in")
+      end
     end
   end
 

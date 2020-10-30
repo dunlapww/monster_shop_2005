@@ -28,7 +28,7 @@
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
+        <p><%= sanitize(msg) %></p>
       </div>
     <% end %>
     <%= yield %>
