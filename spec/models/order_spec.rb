@@ -34,5 +34,8 @@ describe Order, type: :model do
     it 'status' do
       expect(@order_1.status).to eq('pending')
     end
+    it 'quantity_of_items' do
+      expect(@order_1.quantity_of_items).to eq(2)
+    end
   end
 end
