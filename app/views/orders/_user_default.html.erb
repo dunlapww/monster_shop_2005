@@ -3,7 +3,7 @@
 </section>
 
 <section id="status">
-  <p> <%= order.status%></p>
+<p> <%= order.status%></p>
 </section>
 
 <section id="order-quantity_of_items">
@@ -14,13 +14,14 @@
   <p> <%= order.id%></p>
 </section>
 
-<p id="grandtotal">Total: <%=number_to_currency(@order.grandtotal)%></p>
+<p id="grandtotal">Total: <%=number_to_currency(order.grandtotal)%></p>
 
 <section id="datecreated">
-<p> <%= @order.created_at.strftime("%m-%d-%Y")%></p>
+<p> <%= order.created_at.strftime("%m-%d-%Y")%></p>
 </section>
 
-</table>
+<%= button_to "Cancel Order", "#{order.id}", method: :patch, local: true %>
+
 <center>
   <table>
     <tr>
@@ -30,17 +31,18 @@
       <th>Quantity</th>
       <th>Subtotal</th>
     </tr>
-  <% @order.item_orders.each do |item_order|%>
-    <tr>
-    <section id = "item-<%=item_order.item_id%>">
-        <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
-        <td><p><%= link_to item_order.item.merchant.name, "/merchants/#{item_order.item.merchant.id}"%></p></td>
-        <td><p><%= item_order.item.description%></p></td>
-        <td><p><%= item_order.item.image%></p></td>
-        <td><p><%= number_to_currency(item_order.price)%></p></td>
-        <td><p><%= item_order.quantity%></p></td>
-        <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
-      </section>
-    </tr>
-  <% end %>
-</table>
+    <% order.item_orders.each do |item_order|%>
+      <tr>
+        <section id = "item-<%=item_order.item_id%>">
+            <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
+            <td><p><%= link_to item_order.item.merchant.name, "/merchants/#{item_order.item.merchant.id}"%></p></td>
+            <td><p><%= item_order.item.description%></p></td>
+            <td><p><%= item_order.item.image%></p></td>
+            <td><p><%= number_to_currency(item_order.price)%></p></td>
+            <td><p><%= item_order.quantity%></p></td>
+            <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
+        </section>
+      </tr>
+    <% end %>
+  </table>
+</center>
