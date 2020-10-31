@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resources :orders, only: :index
   end
   get "/profile/orders/:id", to: "orders#show"
+  patch '/profile/orders/:id', to: "orders#update"
   #password
   get '/profile/edit_password', to: 'passwords#edit'
   patch '/passwords', to: 'passwords#update'
