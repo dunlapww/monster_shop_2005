@@ -23,6 +23,9 @@
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/orders", method: :create do %>
+
+    <%= hidden_field_tag "user_id", session[:user_id] %>
+
     <%= label_tag :name %>
     <%= text_field_tag :name %>
 
