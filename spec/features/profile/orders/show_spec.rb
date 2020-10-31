@@ -60,7 +60,6 @@ feature 'user show page' do
             expect(page).to have_content("#{item_order2.quantity}")
             expect(page).to have_content("#{item_order2.subtotal.round(2)}")
           end
-          save_and_open_page
         end
       end
     end
