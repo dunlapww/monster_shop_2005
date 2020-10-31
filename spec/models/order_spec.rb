@@ -37,5 +37,15 @@ describe Order, type: :model do
     it 'quantity_of_items' do
       expect(@order_1.quantity_of_items).to eq(2)
     end
+    describe "When all items in an order have been 'fulfilled' by their merchants" do
+      it 'order status changes from pending to packaged' do
+        expect(@order_1.status).to eq("pending")
+        @order_1.item_orders.each do |item_order|
+          item_order.update(status: "fulfilled")
+        end
+        @order_1.package
+        expect(@order_1.status).to eq("packaged")
+      end
+    end
   end
 end
