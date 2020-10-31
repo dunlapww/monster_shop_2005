@@ -24,13 +24,18 @@ class CartController < ApplicationController
 
   def increment_item
     item = Item.find(params[:item_id])
-    cart.add_item(item.id.to_s)
-    redirect_to '/cart'
+    if cart.contents[item.id.to_s] < item.inventory
+      cart.add_item(item.id.to_s)
+      redirect_to '/cart'
+    else
+      flash[:error] = "Quantity cannot exceed item inventory"
+      redirect_to '/cart'
+    end
   end
 
   def decrement_item
     item = Item.find(params[:item_id])
-    cart.subtract_item(item.id.to_s) 
+    cart.subtract_item(item.id.to_s)
     if cart.contents[item.id.to_s].zero?
       session[:cart].delete(params[:item_id])
     end
