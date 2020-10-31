@@ -1,0 +1,10 @@
+
+<section class="distinct-cities">
+  <ul>
+  <% @orders.each do |order| %>
+    <li id= "order-<%=order.id%>">
+      <p><%= link_to "order-#{order.id}", "/orders/#{order.id}" %>: <%= order.status %></p>
+    </li>
+  <% end %>
+  </ul>
+</section>
