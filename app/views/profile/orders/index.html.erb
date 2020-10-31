@@ -3,7 +3,7 @@
   <table>
   <% @orders.each do |order| %>
     <tr id= "order-<%=order.id%>">
-      <td><%= link_to "order-#{order.id}", "/orders/#{order.id}" %></td>
+      <td><%= link_to "order-#{order.id}", "/profile/orders/#{order.id}" %></td>
       <td>Created at: <%= order.created_at.strftime("%m-%d-%Y") %></td>
       <td>Last updated: <%= order.updated_at.strftime("%m-%d-%Y") %></td>
       <td>Status: <%= order.status %></td>
