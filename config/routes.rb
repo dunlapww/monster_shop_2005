@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   namespace :profile do
     resources :orders, only: :index
   end
+  get "/profile/orders/:id", to: "orders#show"
   #password
   get '/profile/edit_password', to: 'passwords#edit'
   patch '/passwords', to: 'passwords#update'
