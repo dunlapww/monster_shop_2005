@@ -12,4 +12,8 @@ class Order <ApplicationRecord
   def quantity_of_items
     items.count
   end
+
+  def package
+    update(status: "packaged") if item_orders.where.not(status: "fulfilled").empty?
+  end
 end
