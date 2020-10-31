@@ -29,6 +29,36 @@ feature 'Cart show' do
 
       expect(current_path).to eq("/orders/new")
     end
+
+
+    #User Story 26, Registered users can check out
+    describe 'And I click the button or link to check out and fill out order info and click create order' do
+      before(:each) do
+        visit("/orders/new")
+        fill_in :name, with: "Bob"
+        fill_in "address", with: "Bob's address"
+        fill_in "city", with: "Bob's city"
+        fill_in "state", with: "Bob state"
+        fill_in "zip", with: 808
+      end
+      describe 'An order is created in the system, which has a status of "pending"' do
+        describe 'That order is associated with my user' do
+          it 'I am here ("/profile/orders"), I see that my order is created, I see my that order in profile' do
+            click_on 'Create Order'
+            expect(current_path).to eq("/profile/orders/")
+            expect(page).to have_content("Your order has been created!")
+            within("#order-#{user.orders.last.id}") do
+              expect(page).to have_link("order-#{user.orders.last.id}")
+            end
+          end
+          it 'My cart is now empty' do
+            expect(page).to have_content('Cart: 3')
+            click_on 'Create Order'
+            expect(page).to have_content('Cart: 0')
+          end
+        end
+      end
+    end
   end
 
   describe 'When I havent added items to my cart' do

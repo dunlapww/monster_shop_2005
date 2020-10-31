@@ -11,4 +11,5 @@ class User < ApplicationRecord
   validates_presence_of :zip, require: true
   validates_presence_of :email_address, require: true
   enum role: %w(default merchant_employee admin)
+  has_many :orders
 end

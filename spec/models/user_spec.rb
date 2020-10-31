@@ -12,6 +12,10 @@ describe User, type: :model do
     it {should validate_confirmation_of(:password)}
     it {should validate_presence_of(:password_confirmation)}
   end
+
+  describe "relations" do
+      it {should have_many(:orders)}
+  end
 end
 
 describe User do
