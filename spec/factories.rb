@@ -23,7 +23,7 @@ FactoryBot.define do
     sequence(:city) {|n| "City: #{n}"}
     sequence(:state) {|n| "State: #{n}"}
     sequence(:zip) {|n| "Zip: #{n}"}
-    sequence(:email_address) {|n| "email@email.com"}
+    sequence(:email_address) {|n| "email#{n}@email.com"}
     sequence(:password) {|n| "123whollysmokes"}
     sequence(:password_confirmation) {|n| "123whollysmokes"}
 
@@ -42,5 +42,6 @@ FactoryBot.define do
     sequence(:city) {|n| "City: #{n}"}
     sequence(:state) {|n| "State: #{n}"}
     sequence(:zip) {|n| "Zip: #{n}"}
+    user
   end
 end

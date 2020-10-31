@@ -32,4 +32,5 @@ describe 'As a registered user' do
       expect(page).to have_link("Edit Profile")
     end
   end
+  
 end
