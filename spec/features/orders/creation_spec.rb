@@ -87,7 +87,7 @@ feature "Order Creation" do
       end
 
       within "#datecreated" do
-        expect(page).to have_content(new_order.created_at)
+        expect(page).to have_content(new_order.created_at.strftime("%m-%d-%Y"))
       end
     end
 

@@ -14,8 +14,8 @@
   <p> <%= order.id%></p>
 </section>
 
-<p>Total: <%=number_to_currency(@order.grandtotal)%></p>
-</section>
+<p id="grandtotal">Total: <%=number_to_currency(@order.grandtotal)%></p>
+
 <section id="datecreated">
 <p> <%= @order.created_at.strftime("%m-%d-%Y")%></p>
 </section>
