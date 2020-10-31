@@ -49,6 +49,7 @@ feature 'Cart show' do
             expect(page).to have_content("Your order has been created!")
             within("#order-#{user.orders.last.id}") do
               expect(page).to have_link("order-#{user.orders.last.id}")
+              expect(page).to have_content('pending')
             end
           end
           it 'My cart is now empty' do

@@ -31,5 +31,8 @@ describe Order, type: :model do
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+    it 'status' do
+      expect(@order_1.status).to eq('pending')
+    end
   end
 end
