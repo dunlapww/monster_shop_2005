@@ -81,6 +81,12 @@ feature 'user show page' do
           expect(user.orders.last.status).to eq("cancelled")
           expect(@mike.items.first.inventory).to eq(paper.inventory + item1_stock)
         end
+        it 'cancel button does not exist if order status is shipped' do
+          @order1.update(status: "shipped")
+          
+          visit("/profile/orders/#{@order1.id}")
+          expect(page).to_not have_button("Cancel Order")
+        end
       end
     end
   end
