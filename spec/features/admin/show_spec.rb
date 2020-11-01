@@ -62,8 +62,54 @@ feature 'admin show' do
           expect(page.all('li')[4]).to have_content("#{order_2.id}") #shipped
           expect(page.all('li')[5]).to have_content("#{order_3.id}") #cancelled
         end
-        
       end
+
+      it 'next to any packaged orders I see a button to ship the order' do
+        meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+        
+        tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy = brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        customer = create(:user)
+        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'packaged')
+        order_2 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'shipped')
+        order_3 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'cancelled')
+        order_4 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'pending')
+      
+        visit "/admin"
+        within("#order-#{order_1.id}") do
+          expect(page).to have_button("Ship")
+        end
+        within("#order-#{order_2.id}") do
+          expect(page).to_not have_button("Ship")
+        end
+        within("#order-#{order_3.id}") do
+          expect(page).to_not have_button("Ship")
+        end
+        within("#order-#{order_4.id}") do
+          expect(page).to_not have_button("Ship")
+        end
+      end
+      it 'when i click the button, the order status is changed to shipped and user can no longer cancel order' do
+        meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+        
+        tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy = brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        customer = create(:user)
+        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'packaged')
+        order_2 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'shipped')
+        
+        visit "/admin"
+        within("#order-#{order_1.id}") do
+          click_button("Ship")
+        end
+        expect(current_path).to eq("/admin")
+        within("#order-#{order_1.id}") do
+          expect(page).to have_content("shipped")
+        end
+      end
+    
     end
   end
 end

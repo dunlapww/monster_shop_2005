@@ -47,5 +47,12 @@ RSpec.describe Cart do
       expect(@cart.subtotal(@ogre)).to eq(20)
       expect(@cart.subtotal(@giant)).to eq(100)
     end
+
+    it '.subract_item()' do
+      @cart.subtract_item(@giant.id.to_s)
+      expect(@cart.items).to eq({@ogre => 1, @giant => 1})
+      @cart.subtract_item(@ogre.id.to_s)
+      expect(@cart.items).to eq({@ogre => 0, @giant => 1})
+    end
   end
 end

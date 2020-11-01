@@ -26,7 +26,8 @@ feature 'user show page' do
           expect(page).to have_content("#{@order1.updated_at.strftime("%m-%d-%Y")}")
           expect(page).to have_content("#{@order1.status}")
           expect(page).to have_content("#{@order1.quantity_of_items}")
-          expect(page).to have_content("#{@order1.grandtotal.round(2)}")
+          
+          expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order1.grandtotal))
 
           item1 = @order1.items.first
           item2 = @order1.items.second
@@ -80,6 +81,12 @@ feature 'user show page' do
           expect(user.orders.last.item_orders.first.status).to eq("unfulfilled")
           expect(user.orders.last.status).to eq("cancelled")
           expect(@mike.items.first.inventory).to eq(paper.inventory + item1_stock)
+        end
+        it 'cancel button does not exist if order status is shipped' do
+          @order1.update(status: "shipped")
+          
+          visit("/profile/orders/#{@order1.id}")
+          expect(page).to_not have_button("Cancel Order")
         end
       end
     end
