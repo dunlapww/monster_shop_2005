@@ -53,7 +53,7 @@ feature 'admin show' do
         order_4 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: customer.id, status: 'pending')
         
         visit "/admin"
-        save_and_open_page
+        
         within("#orders") do
           expect(page.all('li')[0]).to have_content("#{order_1.id}") #packaged
           expect(page.all('li')[1]).to have_content("#{@order1.id}") #pending
