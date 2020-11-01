@@ -70,6 +70,7 @@ feature 'user show page' do
           within("#item-#{item_order1.item_id}") do
             expect(page).to have_content("unfulfilled")
           end
+          
           within("#status") do
             expect(page).to have_content("cancelled")
           end
