@@ -24,9 +24,9 @@ describe Order, type: :model do
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       user = create(:user)
       @order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
-
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @io_pulltoy = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @io_tire = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      
     end
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
@@ -36,6 +36,17 @@ describe Order, type: :model do
     end
     it 'quantity_of_items' do
       expect(@order_1.quantity_of_items).to eq(2)
+    end
+    it '#merchant_items_qty' do
+      @item3 = create(:item, merchant_id: @meg.id)
+      @order_1.item_orders.create!(item: @item3, price: @item3.price, quantity: 5)
+      
+      expect(@order_1.merchant_items_qty(@meg.id)).to eq(7)
+    end
+    it '#merchant_items_value' do
+      @item3 = create(:item, merchant_id: @meg.id, price: 10)
+      @io_item3 = @order_1.item_orders.create!(item: @item3, price: @item3.price, quantity: 5)
+      expect(@order_1.merchant_items_value(@meg.id)).to eq(@tire.price * @io_tire.quantity + @item3.price * @io_item3.quantity)
     end
     
     describe "When all items in an order have been 'fulfilled' by their merchants" do

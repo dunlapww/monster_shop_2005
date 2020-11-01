@@ -12,6 +12,8 @@ describe Merchant, type: :model do
   describe "relationships" do
     it {should have_many :items}
     it {should have_many :users}
+    it {should have_many(:orders).through(:item_orders)}
+    it {should have_many(:item_orders).through(:items)}
   end
 
   describe 'instance methods' do
@@ -53,6 +55,20 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
+    end
+
+    it '#pending_orders' do
+      chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
+      user = create(:user)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id, status: "shipped")
+      order_2 = Order.create!(name: 'Brian', address: '123 Brian Ave', city: 'Denver', state: 'CO', zip: 17033, user_id: user.id)
+      order_3 = Order.create!(name: 'Dao', address: '123 Mike Ave', city: 'Denver', state: 'CO', zip: 17033, user_id: user.id)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2)
+      order_3.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+
+      expected = [order_2, order_3]
+      expect(@meg.pending_orders).to eq(expected)
     end
 
   end
