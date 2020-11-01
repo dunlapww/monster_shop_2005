@@ -3,7 +3,7 @@
 <%= @merchant.city %><br>
 <%= @merchant.state %><br>
 <%= @merchant.zip %><br>
-
+<%= link_to 'My Merchant Items', '/merchant/items' %>
 
 <% @merchant.pending_orders.each do |order| %>
   <div id="order-<%= order.id %>">

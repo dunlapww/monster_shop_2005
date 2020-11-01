@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   delete "/merchants/:id", to: "merchants#destroy"
   # This is going to change
   get '/merchant', to: 'merchant/dashboard#show'
+  namespace :merchant do
+    resources :items, only: :index
+  end
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
