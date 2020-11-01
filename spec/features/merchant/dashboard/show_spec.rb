@@ -36,7 +36,7 @@ feature 'As a merchant' do
     it "I see any pending orders that contain items of mine and their details" do
       visit "/merchant"
       within "#order-#{@order1.id}" do
-        expect(page).to have_link(@order1.id)
+        expect(page).to have_link("#{@order1.id}")
         expect(page).to have_content(@order1.created_at.to_date)
         expect(page).to have_content(@order1.merchant_items_qty(@merchant1.id))
         expect(page).to have_content(@order1.merchant_items_value(@merchant1.id))
