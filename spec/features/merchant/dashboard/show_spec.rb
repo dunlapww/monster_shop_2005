@@ -25,6 +25,7 @@ feature 'As a merchant' do
       create(:item_order, order_id: @order3.id, item_id: @item1.id)
       
     end
+
     it "I see the name an full address of the merchant I work for" do
       visit "/merchant"
       expect(page).to have_content(@merchant_employee.merchant.name)
@@ -33,6 +34,7 @@ feature 'As a merchant' do
       expect(page).to have_content(@merchant_employee.merchant.state)
       expect(page).to have_content(@merchant_employee.merchant.zip)
     end
+
     it "I see any pending orders that contain items of mine and their details" do
       visit "/merchant"
       within "#order-#{@order1.id}" do
@@ -42,6 +44,13 @@ feature 'As a merchant' do
         expect(page).to have_content(@order1.merchant_items_value(@merchant1.id))
       end
       expect(page).to_not have_selector("#order-#{@order2.id}")
+    end
+
+    it 'I see a link to items' do
+      visit '/merchant'
+
+      click_link("My Merchant Items")
+      expect(current_path).to eq('/merchant/items')
     end
   end
 end
