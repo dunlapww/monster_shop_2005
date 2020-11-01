@@ -84,46 +84,4 @@ feature 'user show page' do
       end
     end
   end
-
-  # describe "testing" do
-  #   it "has button to cancel order" do
-  #
-  #     mike = Merchant.create!(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
-  #
-  #     order = user.orders.create!(name: "Stuff",
-  #                                 address: "There",
-  #                                 city: "here",
-  #                                 state: "CO",
-  #                                 zip: 98798)
-  #     paper = mike.items.create!(name: "Lined Paper",
-  #                                 description: "Great for writing on!",
-  #                                 price: 20,
-  #                                 image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png",
-  #                                 inventory: 25)
-  #
-  #     item_order1 = ItemOrder.create!(order_id: order.id,
-  #                      item_id: paper.id,
-  #                      price: paper.price,
-  #                      quantity: 5)
-  #
-  #     visit("/profile/orders/#{order.id}")
-  #
-  #     expect(item_order1.status).to eq("pending")
-  #
-  #     item1_inventory = paper.inventory
-  #     item1_stock = item_order1.quantity
-  #     click_button("Cancel Order")
-  #
-  #
-  #     expect(current_path).to eq("/profile")
-  #
-  #     # page.should have_selector ".notice-flash", text: "Order Cancelled"
-  #     expect(page).to have_content("Order Cancelled")
-  #     visit("/profile/orders/#{order.id}")
-  #     expect(page).to have_content("cancelled")
-  #     expect(item_order1.status).to eq("unfulfilled")
-  #     expect(order.status).to eq("cancelled")
-  #     expect(item1.inventory).to eq(paper.inventory + item1_stock)
-  #   end
-  # end
 end

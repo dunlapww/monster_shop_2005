@@ -12,7 +12,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_admin?
-    render file: '/public/404' if current_user && current_user.admin?
+    current_user && current_user.admin?
+  end
+
+  def no_admin
+    render file: '/public/404' if current_admin?
   end
 
   def current_user?
