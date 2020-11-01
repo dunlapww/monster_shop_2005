@@ -20,12 +20,32 @@ feature 'Admin merchant index' do
       create(:item_order, order_id: @order1.id, item_id: @item3.id)
       create(:item_order, order_id: @order2.id, item_id: @item2.id)
       create(:item_order, order_id: @order3.id, item_id: @item1.id)
+      @merchant2 = create(:merchant)
     end
 
     it 'I see a list of merchants' do
       visit '/merchants'
       click_link("#{@merchant1.name}")
       expect(current_path).to eq("/admin/merchants/#{@merchant1.id}")
+    end
+
+    it 'I see a button to disable a merchant' do
+      visit '/admin/merchants'
+
+      within("#merchant-#{@merchant1.id}") do
+        click_button("Disable Merchant")
+      end
+
+      expect(current_path).to eq('/admin/merchants')
+
+      expect(page).to have_content("Merchant #{@merchant1.name} Disabled")
+      within("#merchant-#{@merchant1.id}") do
+        expect(page).to have_button("Enable Merchant")
+      end
+
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_button("Disable Merchant")
+      end
     end
   end  
 end
