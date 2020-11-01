@@ -12,4 +12,6 @@ class User < ApplicationRecord
   validates_presence_of :email_address, require: true
   enum role: %w(default merchant_employee admin)
   has_many :orders
+
+  belongs_to :merchant, optional: true
 end

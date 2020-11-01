@@ -12,6 +12,7 @@ require 'rails_helper'
 describe 'as a visitor' do
   describe "when I visit login path" do
     before :each do
+
       @user = User.create!({password: "userpass",
                              name: "username",
                              address: "useraddress",
@@ -21,7 +22,8 @@ describe 'as a visitor' do
                              email_address: "useremail",
                              password_confirmation: "userpass",
                              role: 0})
-      @merchant = User.create!({password: "merchantpass",
+      @merchant = create(:merchant)
+      @merchant_employee = User.create!({password: "merchantpass",
                              name: "merchantname",
                              address: "merchantaddress",
                              city: "merchantcity",
@@ -29,6 +31,7 @@ describe 'as a visitor' do
                              zip: "merchantzip",
                              email_address: "merchantemail",
                              password_confirmation: "merchantpass",
+                             merchant_id: @merchant.id,
                              role: 1})
       @admin = User.create!({password: "adminpass",
                              name: "adminname",
@@ -55,12 +58,12 @@ describe 'as a visitor' do
     it "as a merchant, I see a field to enter my email and password" do
       visit '/login'
 
-      fill_in :email_address, with: @merchant.email_address
-      fill_in :password, with: @merchant.password
+      fill_in :email_address, with: @merchant_employee.email_address
+      fill_in :password, with: @merchant_employee.password
 
       click_on("Log In")
       expect(current_path).to eq("/merchant")
-      expect(page).to have_content("Thank you for logging in #{@merchant.name}")
+      expect(page).to have_content("Thank you for logging in #{@merchant_employee.name}")
     end
 
     it "as a admin, I see a field to enter my email and password" do
@@ -105,8 +108,8 @@ describe 'as a visitor' do
       end
 
       it "as a merchant, i'm redirected to /merchant" do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant.id}}
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant_employee.id}}
         visit '/login'
         expect(current_path).to eq('/merchant')
       end
@@ -150,7 +153,7 @@ describe 'as a visitor' do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
       # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
-      # allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant.id, cart: {@tire.name => @tire.id, @pull_toy.name => @pull_toy.id}}}
+      # allow_any_instance_of(ActionDispatch::Request).to receive(:session){{user_id: @merchant_employee.id, cart: {@tire.name => @tire.id, @pull_toy.name => @pull_toy.id}}}
 
       visit '/merchants'
       expect(page).to have_content("Cart: 3")
