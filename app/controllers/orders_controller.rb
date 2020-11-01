@@ -39,7 +39,7 @@ class OrdersController <ApplicationController
     end
     order.update({status: "cancelled"})
     flash[:notice] = "Order Cancelled"
-    redirect_to '/profile'
+    redirect_to "/profile"
   end
 
 

@@ -22,7 +22,7 @@ feature 'user show page' do
           expect(page).to have_content("#{@order1.updated_at.strftime("%m-%d-%Y")}")
           expect(page).to have_content("#{@order1.status}")
           expect(page).to have_content("#{@order1.quantity_of_items}")
-          expect(page).to have_content("#{@order1.grandtotal}")
+          expect(page).to have_content("#{@order1.grandtotal.round(2)}")
         end
       end
     end
