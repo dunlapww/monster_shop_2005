@@ -5,6 +5,15 @@ class Order <ApplicationRecord
   has_many :items, through: :item_orders
   belongs_to :user
 
+  def self.status_sort
+    self.order(Arel.sql("CASE
+                  WHEN status='packaged' THEN '1'
+                  WHEN status='pending' THEN '2'
+                  WHEN status='shipped' THEN '3'
+                  WHEN status='cancelled' THEN '4'
+                END"))
+  end
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
