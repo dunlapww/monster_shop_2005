@@ -18,8 +18,8 @@ FactoryBot.define do
   end
 
   factory :user do
-    sequence(:name) {|n| "Merchant Name: #{n}" }
-    sequence(:address) {|n| "Merchant Address: #{n}"}
+    sequence(:name) {|n| "User Name: #{n}" }
+    sequence(:address) {|n| "User Address: #{n}"}
     sequence(:city) {|n| "City: #{n}"}
     sequence(:state) {|n| "State: #{n}"}
     sequence(:zip) {|n| "Zip: #{n}"}
