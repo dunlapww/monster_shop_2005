@@ -35,11 +35,11 @@ class OrdersController <ApplicationController
     order.item_orders.each do |item_order|
       current_inventory = item_order.item.inventory
       item_order.item.update({inventory: current_inventory + item_order.quantity})
-      item_order.update({status: "unfulfilled"})
+      item_order.update({status: "unfulfilled",
+                         quantity: 0})
     end
-    order.update({status: "cancelled"})
-    flash[:notice] = "Order Cancelled"
-    redirect_to '/profile'
+    order.update(status: "cancelled")
+    redirect_to "/profile", notice: "Order Cancelled"
   end
 
 

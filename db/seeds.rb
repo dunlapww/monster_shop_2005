@@ -34,18 +34,30 @@ user = User.create!({password: "testpass",
 
 mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
-order = user.orders.create!(name: "Stuff",
+order1 = user.orders.create!(name: "Stuff",
                            address: "There",
                            city: "here",
                            state: "CO",
                            zip: 98798)
+
+order2 = user.orders.create!(name: "Stuff",
+                           address: "Yonder",
+                           city: "Chicago",
+                           state: "CO",
+                           zip: 98798)
+
 paper = mike.items.create!(name: "Lined Paper",
                            description: "Great for writing on!",
                            price: 20,
                            image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png",
                            inventory: 25)
 
-item_order1 = ItemOrder.create!(order_id: order.id,
+item_order1 = ItemOrder.create!(order_id: order1.id,
+                item_id: paper.id,
+                price: paper.price,
+                quantity: 5)
+
+item_order2 = ItemOrder.create!(order_id: order2.id,
                 item_id: paper.id,
                 price: paper.price,
                 quantity: 5)

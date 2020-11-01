@@ -33,7 +33,7 @@ class UsersController < ApplicationController
       flash[:success] = "Your profile has been updated!"
       redirect_to '/profile'
     else
-      flash.now[:error] = @user.errors.full_messages.to_sentence
+      flash[:error] = @user.errors.full_messages.to_sentence
       render action: 'edit'
     end
   end
