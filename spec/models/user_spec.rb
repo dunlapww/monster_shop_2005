@@ -15,6 +15,7 @@ describe User, type: :model do
 
   describe "relations" do
       it {should have_many(:orders)}
+      it {should belong_to(:merchant).optional}
   end
 end
 
