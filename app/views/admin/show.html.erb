@@ -1,5 +1,15 @@
- <% @orders.each do |order|%>
-  <div id=order-<%= order.id %>>
-    <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %>, Order ID: <%= order.id %>, Created at: <%= order.created_at.to_date %>
-  </div><br>
-<% end%>
+ <section id="orders">
+  <ul>
+    <% @orders.each do |order|%>
+      <div id="order-<%= order.id %>">
+        <li>
+          <%= link_to "#{order.user.name}",
+          "/admin/users/#{order.user.id}" %>, 
+          Order ID: <%= order.id %>, 
+          Created at: <%= order.created_at.to_date %>,
+          Status: <%= order.status %>
+        </li>
+      </div><br>
+    <% end%>
+  </ul>
+ </section>
