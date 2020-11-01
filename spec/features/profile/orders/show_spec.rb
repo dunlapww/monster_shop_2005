@@ -26,7 +26,8 @@ feature 'user show page' do
           expect(page).to have_content("#{@order1.updated_at.strftime("%m-%d-%Y")}")
           expect(page).to have_content("#{@order1.status}")
           expect(page).to have_content("#{@order1.quantity_of_items}")
-          expect(page).to have_content(@order1.grandtotal.round(2))
+          
+          expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order1.grandtotal))
 
           item1 = @order1.items.first
           item2 = @order1.items.second
