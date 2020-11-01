@@ -25,4 +25,12 @@ class Order <ApplicationRecord
   def package
     update(status: "packaged") if item_orders.where.not(status: "fulfilled").empty?
   end
+
+  def merchant_items_qty(merchant_id)
+    items.where("items.merchant_id=?", merchant_id).sum(:quantity)
+  end
+
+  def merchant_items_value(merchant_id)
+    items.where("items.merchant_id=?", merchant_id).sum("item_orders.quantity * item_orders.price")
+  end
 end

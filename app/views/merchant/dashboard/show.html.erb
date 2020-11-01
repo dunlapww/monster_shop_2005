@@ -1,5 +1,15 @@
-<%= @user.merchant.name %><br>
-<%= @user.merchant.address %><br>
-<%= @user.merchant.city %><br>
-<%= @user.merchant.state %><br>
-<%= @user.merchant.zip %><br>
+<%= @merchant.name %><br>
+<%= @merchant.address %><br>
+<%= @merchant.city %><br>
+<%= @merchant.state %><br>
+<%= @merchant.zip %><br>
+
+
+<% @merchant.pending_orders.each do |order| %>
+  <div id="order-<%= order.id %>">
+    <%= link_to "#{order.id}", "/merchant/orders/#{order.id}" %>
+    <%= order.created_at.to_date %>
+    <%= order.merchant_items_qty(@merchant.id) %>
+    <%= order.merchant_items_value(@merchant.id) %>
+  </div>
+<% end%>
