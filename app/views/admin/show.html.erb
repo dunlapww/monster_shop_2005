@@ -1,0 +1,5 @@
+ <% @orders.each do |order|%>
+  <div id=order-<%= order.id %>>
+    <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %>, Order ID: <%= order.id %>, Created at: <%= order.created_at.to_date %>
+  </div><br>
+<% end%>
