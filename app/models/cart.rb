@@ -12,6 +12,7 @@ class Cart
 
   def subtract_item(item)
     @contents[item] -= 1
+    
   end
 
   def total_items

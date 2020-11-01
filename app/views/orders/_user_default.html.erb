@@ -20,7 +20,7 @@
 <p> <%= order.created_at.strftime("%m-%d-%Y")%></p>
 </section>
 
-<%= button_to "Cancel Order", "#{order.id}", method: :patch, local: true %>
+<%= button_to "Cancel Order", { :controller => :orders, :action => 'update', :status => 'cancelled', :order_id => "#{order.id}"}, method: :patch %>
 
 <center>
   <table>

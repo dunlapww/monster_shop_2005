@@ -28,14 +28,36 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+
     it 'status' do
       expect(@order_1.status).to eq('pending')
     end
+
     it 'quantity_of_items' do
       expect(@order_1.quantity_of_items).to eq(2)
+    end
+
+    it 'cancel_order' do
+      item = create(:item)
+      item2 = create(:item)
+      order_item = create(:item_order, order: @order_1, item: item)
+      order_item2 = create(:item_order, order: @order_1, item: item2)
+      @order_1.cancel_order
+      expect(@order_1.item_orders.pluck(:status).all?('unfulfilled')).to eq(true)
+    end
+
+    it 'fullilled?' do
+      user = create(:user)
+      user.orders << @order_1
+      expect(user.orders.first.fulfilled?).to eq(false)
+      user.orders.first.item_orders.first.update(status: 'fulfilled')
+      expect(user.orders.first.fulfilled?).to eq(false)
+      user.orders.first.item_orders.last.update(status: 'fulfilled')
+      expect(user.orders.first.fulfilled?).to eq(true)
     end
   end
 end
