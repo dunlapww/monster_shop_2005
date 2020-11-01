@@ -59,5 +59,9 @@ Rails.application.routes.draw do
   get '/profile/edit_password', to: 'passwords#edit'
   patch '/passwords', to: 'passwords#update'
 
+  namespace :admin do
+    resources :orders, only: :update
+  end
+  
   get '/admin', to: 'admin#show'
 end
