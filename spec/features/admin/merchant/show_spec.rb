@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-feature 'Admin merchant index' do
+feature 'Admin merchant show' do
   given!(:user) {@admin = create(:user, role: 2)}
-  describe 'When I visit the merchant index page' do
+  describe 'When I visit an admin merchant show page' do
     before :each do
       @merchant1 = create(:merchant)
       @merchant_employee = create(:user, role: 1)
@@ -22,7 +22,7 @@ feature 'Admin merchant index' do
       create(:item_order, order_id: @order3.id, item_id: @item1.id)
     end
 
-    it "I see the name an full address of the merchant I work for" do
+    it "I see the name an full address of the merchant I'm viewing" do
       visit "/admin/merchants/#{@merchant1.id}"
       expect(page).to have_content(@merchant1.name)
       expect(page).to have_content(@merchant1.address)
@@ -31,7 +31,7 @@ feature 'Admin merchant index' do
       expect(page).to have_content(@merchant1.zip)
     end
 
-    it "I see any pending orders that contain items of mine and their details" do
+    it "I see any pending orders that contain their items and thos orders details" do
       visit "/admin/merchants/#{@merchant1.id}"
       within "#order-#{@order1.id}" do
         expect(page).to have_link("#{@order1.id}")
@@ -42,7 +42,7 @@ feature 'Admin merchant index' do
       expect(page).to_not have_selector("#order-#{@order2.id}")
     end
 
-    it 'I see a link to items' do
+    it 'I see a link to that merchants items' do
       visit "/admin/merchants/#{@merchant1.id}"
 
       click_link("My Merchant Items")
