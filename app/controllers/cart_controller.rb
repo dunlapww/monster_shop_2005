@@ -1,5 +1,6 @@
 class CartController < ApplicationController
-  before_action :current_admin?, only: :show
+  before_action :no_admin, only: :show
+
 
   def add_item
     item = Item.find(params[:item_id])
