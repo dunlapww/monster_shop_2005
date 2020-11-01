@@ -38,8 +38,8 @@ describe 'As an admin' do
       Order.all.each do |order|
         within("#order-#{order.id}") do
           expect(page).to have_link(order.user.name)
-          expect(page).to have_content(order.id)
-          expect(page).to have_content(order.created_at.to_date)
+          expect(page).to have_content("Order ID: #{order.id}")
+          expect(page).to have_content("Created at: #{order.created_at.to_date}")
         end
       end
     end
