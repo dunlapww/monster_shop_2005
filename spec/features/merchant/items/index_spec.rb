@@ -88,12 +88,14 @@ feature 'Merchant employee merchant index' do
         within "#item-#{@item1.id}" do
           click_button("Deactivate")
           expect(page).to have_content("false")
+          expect(page).to have_button("Activate")
         end
         expect(page).to have_content("#{@item1.name} is no longer available for sale")
 
         within "#item-#{@item5.id}" do
           click_button("Activate")
           expect(page).to have_content("true")
+          expect(page).to have_button("Deactivate")
         end
         expect(page).to have_content("#{@item5.name} is now available for sale")
 
