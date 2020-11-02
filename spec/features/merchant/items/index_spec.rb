@@ -54,6 +54,49 @@ feature 'Merchant employee merchant index' do
           expect(page).to have_button("Deactivate")
         end
 
+        within "#item-#{@item4.id}" do
+          expect(page).to have_content(@item4.name)
+          expect(page).to have_content(@item4.description)
+          expect(page).to have_content("#{@item4.price.round(2)}")
+          expect(page).to have_content(@item4.active?)
+          expect(page).to have_content(@item4.inventory)
+          expect(page).to have_button("Activate")
+        end
+
+        within "#item-#{@item5.id}" do
+          expect(page).to have_content(@item5.name)
+          expect(page).to have_content(@item5.description)
+          expect(page).to have_content("#{@item5.price.round(2)}")
+          expect(page).to have_content(@item5.active?)
+          expect(page).to have_content(@item5.inventory)
+          expect(page).to have_button("Activate")
+        end
+
+        within "#item-#{@item6.id}" do
+          expect(page).to have_content(@item6.name)
+          expect(page).to have_content(@item6.description)
+          expect(page).to have_content("#{@item6.price.round(2)}")
+          expect(page).to have_content(@item6.active?)
+          expect(page).to have_content(@item6.inventory)
+          expect(page).to have_button("Activate")
+        end
+      end
+
+      it 'when I click button to activate or deactivate, I am in index and see the item has been toggled with notification' do
+        visit "/merchant/items"
+
+        within "#item-#{@item1.id}" do
+          click_button("Deactivate")
+          expect(page).to have_content("false")
+        end
+        expect(page).to have_content("#{@item1.name} is no longer available for sale")
+
+        within "#item-#{@item5.id}" do
+          click_button("Activate")
+          expect(page).to have_content("true")
+        end
+        expect(page).to have_content("#{@item5.name} is now available for sale")
+
       end
     end
   end
