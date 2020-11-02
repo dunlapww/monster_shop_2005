@@ -14,8 +14,8 @@
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
-      <p> <%= button_to 'Deactivate', {:controller => :items, :action => :update, :change_active? => true, :item_id => item.id},  method: :patch if item.active? %></p>
-      <p> <%= button_to 'Activate', {:controller => :items, :action => :update, :change_active? => true, :item_id => item.id}, method: :patch if !item.active? %></p>
+      <p> <%= button_to 'Deactivate', merchant_item_path(item, {change_active?: true}), method: :patch if item.active? %></p>
+      <p> <%= button_to 'Activate', merchant_item_path(item, {change_active?: true}), method: :patch if !item.active? %></p>
     </section>
   <% end %>
 </section>

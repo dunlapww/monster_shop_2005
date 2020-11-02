@@ -4,7 +4,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:item_id])
+    item = Item.find(params[:id])
     if params[:change_active?]
       item.toggle!(:active?)
       flash[:sucess] = item.active? ? "#{item.name} is now available for sale" : "#{item.name} is no longer available for sale"

@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   delete "/merchants/:id", to: "merchants#destroy"
   # This is going to change
   get '/merchant', to: 'merchant/dashboard#show'
-  patch '/merchant/items', to: 'merchant/items#update'
+  #patch '/merchant/items', to: 'merchant/items#update'
   namespace :merchant do
-    resources :items, only: :index
+    resources :items, only: [:index, :update]
   end
 
   get "/items", to: "items#index"
