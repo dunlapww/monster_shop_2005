@@ -70,6 +70,8 @@ feature 'Admin merchant index' do
       within("#merchant-#{@merchant3.id}") do
         click_button("Enable Merchant")
       end
+
+      expect(page).to have_content("Merchant #{@merchant3.name} Enabled")
       
       @merchant3.items.each do |item|
         expect(item.active?).to eq(true)
