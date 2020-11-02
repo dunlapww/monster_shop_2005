@@ -21,7 +21,7 @@
 </section>
 
 
-<%= button_to "Cancel Order", "#{order.id}", method: :patch, local: true unless order.status == 'shipped'%>
+<%= button_to "Cancel Order", "#{order.id}", method: :patch, local: true if order.can_be_cancelled? %>
 
 <center>
   <table>
