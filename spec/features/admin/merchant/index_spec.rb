@@ -21,6 +21,10 @@ feature 'Admin merchant index' do
       create(:item_order, order_id: @order2.id, item_id: @item2.id)
       create(:item_order, order_id: @order3.id, item_id: @item1.id)
       @merchant2 = create(:merchant)
+      @merchant3 = create(:merchant, active?: false)
+      create(:item, merchant_id: @merchant3.id, active?: false)
+      create(:item, merchant_id: @merchant3.id, active?: false)
+      create(:item, merchant_id: @merchant3.id, active?: false)
     end
 
     it 'I see a list of merchants' do
@@ -57,6 +61,18 @@ feature 'Admin merchant index' do
 
       @merchant1.items.each do |item|
         expect(item.active?).to eq(false)
+      end
+    end
+
+    it 'enabling a merchant also enables that merchants items' do
+      visit '/admin/merchants'
+
+      within("#merchant-#{@merchant3.id}") do
+        click_button("Enable Merchant")
+      end
+      
+      @merchant3.items.each do |item|
+        expect(item.active?).to eq(true)
       end
     end
   end  
