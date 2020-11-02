@@ -91,5 +91,14 @@ describe Merchant, type: :model do
         expect(item.active?).to eq(false)
       end
     end
+
+    it '#toggle_active_status' do
+      @meg.toggle_active_status
+      expect(@meg.active?).to eq(false)
+      expect(@meg.items.first.active?).to eq(false)
+      @meg.toggle_active_status
+      expect(@meg.active?).to eq(true)
+      expect(@meg.items.first.active?).to eq(true)
+    end
   end
 end
