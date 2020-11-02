@@ -21,6 +21,7 @@ describe Merchant, type: :model do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     end
+
     it 'no_orders' do
       expect(@meg.no_orders?).to eq(true)
 
@@ -71,5 +72,15 @@ describe Merchant, type: :model do
       expect(@meg.pending_orders).to eq(expected)
     end
 
+    it '#switch_items_active_status' do
+      merchant3 = create(:merchant, active?: true)
+      create(:item, merchant_id: merchant3.id, active?: false)
+      create(:item, merchant_id: merchant3.id, active?: false)
+      create(:item, merchant_id: merchant3.id, active?: false)
+      merchant3.switch_items_active_status
+      merchant3.items.each do |item|
+        expect(item.active?).to eq(true)
+      end
+    end
   end
 end
