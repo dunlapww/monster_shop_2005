@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # This is going to change
   get '/merchant', to: 'merchant/dashboard#show'
   namespace :merchant do
-    resources :items, only: :index
+    resources :items, only: [:index, :update]
   end
 
   get "/items", to: "items#index"
@@ -66,6 +66,6 @@ Rails.application.routes.draw do
     resources :orders, only: :update
     resources :merchants, only: [:show, :index, :update]
   end
-  
+
   get '/admin', to: 'admin#show'
 end
