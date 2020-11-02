@@ -33,4 +33,8 @@ class Order <ApplicationRecord
   def merchant_items_value(merchant_id)
     items.where("items.merchant_id=?", merchant_id).sum("item_orders.quantity * item_orders.price")
   end
+
+  def can_be_cancelled?
+    status == "pending" || status == "packaged"
+  end
 end
