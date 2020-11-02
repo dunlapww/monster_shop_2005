@@ -10,13 +10,7 @@ class Admin::MerchantsController < ApplicationController
   def update
     merchant = Merchant.find(params[:id])
     merchant.toggle!(:active?)
-    merchant.items.each do |item|
-      if merchant.active?
-        item.update(active?: true)
-      else
-        item.update(active?: false)
-      end
-    end
+    merchant.switch_items_active_status
     flash[:success] = merchant.active? ? "Merchant #{merchant.name} Enabled" : "Merchant #{merchant.name} Disabled"
     redirect_to '/admin/merchants'
   end

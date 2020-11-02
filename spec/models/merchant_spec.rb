@@ -74,12 +74,21 @@ describe Merchant, type: :model do
 
     it '#switch_items_active_status' do
       merchant3 = create(:merchant, active?: true)
+      merchant4 = create(:merchant, active?: false)
       create(:item, merchant_id: merchant3.id, active?: false)
       create(:item, merchant_id: merchant3.id, active?: false)
       create(:item, merchant_id: merchant3.id, active?: false)
+      create(:item, merchant_id: merchant4.id, active?: true)
+      create(:item, merchant_id: merchant4.id, active?: true)
+      create(:item, merchant_id: merchant4.id, active?: true)
       merchant3.switch_items_active_status
+      merchant4.switch_items_active_status
       merchant3.items.each do |item|
         expect(item.active?).to eq(true)
+      end
+
+      merchant4.items.each do |item|
+        expect(item.active?).to eq(false)
       end
     end
   end
