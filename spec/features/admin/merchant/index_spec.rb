@@ -47,5 +47,17 @@ feature 'Admin merchant index' do
         expect(page).to have_button("Disable Merchant")
       end
     end
+
+    it 'disabling a merchant also disables that merchants items' do
+      visit '/admin/merchants'
+
+      within("#merchant-#{@merchant1.id}") do
+        click_button("Disable Merchant")
+      end
+
+      @merchant1.items.each do |item|
+        expect(item.active?).to eq(false)
+      end
+    end
   end  
 end
