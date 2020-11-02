@@ -72,10 +72,10 @@ feature 'Admin merchant index' do
       end
 
       expect(page).to have_content("Merchant #{@merchant3.name} Enabled")
-      
+
       @merchant3.items.each do |item|
         expect(item.active?).to eq(true)
       end
     end
-  end  
+  end
 end
