@@ -28,27 +28,42 @@ describe Order, type: :model do
       @io_tire = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       
     end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+
     it 'status' do
       expect(@order_1.status).to eq('pending')
     end
+
     it 'quantity_of_items' do
       expect(@order_1.quantity_of_items).to eq(2)
     end
+
     it '#merchant_items_qty' do
       @item3 = create(:item, merchant_id: @meg.id)
       @order_1.item_orders.create!(item: @item3, price: @item3.price, quantity: 5)
       
       expect(@order_1.merchant_items_qty(@meg.id)).to eq(7)
     end
+
     it '#merchant_items_value' do
       @item3 = create(:item, merchant_id: @meg.id, price: 10)
       @io_item3 = @order_1.item_orders.create!(item: @item3, price: @item3.price, quantity: 5)
       expect(@order_1.merchant_items_value(@meg.id)).to eq(@tire.price * @io_tire.quantity + @item3.price * @io_item3.quantity)
     end
     
+    it '#can_be_cancelled?' do
+      order2 = create(:order, status: 'shipped')
+      order3 = create(:order, status: 'packaged')
+      order4 = create(:order, status: 'cancelled')
+      expect(@order_1.can_be_cancelled?).to eq(true)
+      expect(order2.can_be_cancelled?).to eq(false)
+      expect(order3.can_be_cancelled?).to eq(true)
+      expect(order4.can_be_cancelled?).to eq(false)
+    end
+
     describe "When all items in an order have been 'fulfilled' by their merchants" do
       it 'order status changes from pending to packaged' do
         expect(@order_1.status).to eq("pending")

@@ -64,7 +64,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :orders, only: :update
-    resources :merchants, only: :show
+    resources :merchants, only: [:show, :index, :update]
   end
   
   get '/admin', to: 'admin#show'
