@@ -123,7 +123,17 @@ feature 'Merchant employee merchant index' do
       end
 
       it "when I click the delete button I am returned to my items page, I see a flash message indicating this item is now deleted, and and I no longer see this item on the page" do
+        visit "/merchant/items"
 
+        within "#item-#{@item4.id}" do
+          click_button("Delete")
+        end
+
+        expect(page).to have_content("Item #{@item4.id} Deleted")
+        expect(page).to_not have_content(@item4.name)
+        expect(page).to_not have_content(@item4.description)
+        expect(page).to_not have_content("#{@item4.price.round(2)}")
+        expect(page).to_not have_content(@item4.inventory)
       end
     end
   end
