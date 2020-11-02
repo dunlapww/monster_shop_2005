@@ -103,9 +103,9 @@ feature 'Merchant employee merchant index' do
 
       it "I see a button or link to delete the item next to each item that has never been ordered" do
         visit "/merchant/items"
-        
+
         within "#item-#{@item1.id}" do
-          expect(page).to_not have_content("Delete")
+          expect(page).to_not have_button("Delete")
         end
 
         within "#item-#{@item4.id}" do
