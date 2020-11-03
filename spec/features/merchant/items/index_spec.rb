@@ -100,6 +100,37 @@ feature 'Merchant employee merchant index' do
         expect(page).to have_content("#{@item5.name} is now available for sale")
 
       end
+
+      it "I see a button or link to delete the item next to each item that has never been ordered" do
+        visit "/merchant/items"
+
+        within "#item-#{@item1.id}" do
+          expect(page).to_not have_button("Delete")
+        end
+
+        within "#item-#{@item4.id}" do
+          expect(page).to have_button("Delete")
+        end
+
+        within "#item-#{@item5.id}" do
+          expect(page).to have_button("Delete")
+        end
+
+        within "#item-#{@item6.id}" do
+          expect(page).to have_button("Delete")
+        end
+
+      end
+
+      it "when I click the delete button I am returned to my items page, I see a flash message indicating this item is now deleted, and and I no longer see this item on the page" do
+        visit "/merchant/items"
+
+        within "#item-#{@item4.id}" do
+          click_button("Delete")
+        end
+
+        expect(page).to have_no_selector("#item-#{@item4.id}")
+      end
     end
   end
 end

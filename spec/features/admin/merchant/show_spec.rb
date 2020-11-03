@@ -45,8 +45,8 @@ feature 'Admin merchant show' do
     it 'I see a link to that merchants items' do
       visit "/admin/merchants/#{@merchant1.id}"
 
-      click_link("My Merchant Items")
-      expect(current_path).to eq('/merchant/items')
+      click_link("Merchant Items")
+      expect(current_path).to eq(admin_merchant_items_path(@merchant1))
     end
   end
 end

@@ -16,6 +16,7 @@
       <p>Inventory: <%= item.inventory %> </p>
       <p> <%= button_to 'Deactivate', merchant_item_path(item, {change_active?: true}), method: :patch if item.active? %></p>
       <p> <%= button_to 'Activate', merchant_item_path(item, {change_active?: true}), method: :patch if !item.active? %></p>
+      <p> <%= button_to 'Delete', merchant_item_path(item), method: :delete if item.item_orders.empty? %></p>
     </section>
   <% end %>
 </section>

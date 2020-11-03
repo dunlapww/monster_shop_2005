@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get '/merchant', to: 'merchant/dashboard#show'
   #patch '/merchant/items', to: 'merchant/items#update'
   namespace :merchant do
-    resources :items, only: [:index, :update]
+    resources :items, only: [:index, :update, :destroy]
   end
 
   get "/items", to: "items#index"
@@ -66,6 +66,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :orders, only: :update
     resources :merchants, only: [:show, :index, :update]
+    resources :merchants, only: :show do
+      resources :items, only: [:index, :new]
+    end
   end
 
   get '/admin', to: 'admin#show'
