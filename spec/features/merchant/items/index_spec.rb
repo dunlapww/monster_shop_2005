@@ -27,6 +27,7 @@ feature 'Merchant employee merchant index' do
       it 'I see all my items and their details [name, description, imgae, active?, inventory] and button to deactivate' do
         visit "/merchant/items"
         within "#item-#{@item1.id}" do
+
           expect(page).to have_content(@item1.name)
           expect(page).to have_content(@item1.description)
           expect(page).to have_content("#{@item1.price.round(2)}")

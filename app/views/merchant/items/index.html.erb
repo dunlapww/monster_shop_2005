@@ -11,7 +11,7 @@
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Active?: <%= item.active? %> </p>
       <%= link_to image_tag("#{item.image}"), "/items/#{item.id}", id:"image-#{item.id}"%>
-      <p> <%= item.description unless @merchant%> </p>
+      <p> <%= item.description %> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
       <p> <%= button_to 'Deactivate', merchant_item_path(item, {change_active?: true}), method: :patch if item.active? %></p>

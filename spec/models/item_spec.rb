@@ -5,7 +5,6 @@ describe Item, type: :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :description }
     it { should validate_presence_of :price }
-    it { should validate_presence_of :image }
     it { should validate_presence_of :inventory }
   end
 
@@ -46,6 +45,11 @@ describe Item, type: :model do
       order = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
+    end
+
+    it 'fill_in_blank_image' do
+      chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", image: "", price: 50, inventory: 5)
+      expect(chain.image).to eq('https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png')
     end
   end
 end
