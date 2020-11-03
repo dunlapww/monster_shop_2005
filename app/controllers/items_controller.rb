@@ -32,13 +32,15 @@ class ItemsController<ApplicationController
   def edit
     @item = Item.find(params[:id])
     @merchant = @item.merchant
+    @path = "/items/#{@item.id}"
   end
 
   def update
     @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.save
-      redirect_to "/items/#{@item.id}"
+      flash[:success] = "#{@item.name} has been updated"
+      redirect_to "#{params[:item][:path]}"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :edit

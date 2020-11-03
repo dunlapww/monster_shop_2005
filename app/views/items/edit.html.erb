@@ -2,8 +2,11 @@
 
 <center>
   <%= form_with model: @item, url: "/items/#{@item.id}", method: :patch do |f| %>
+
     <%= f.label :name %>
     <%= f.text_field :name%>
+
+    <%= f.hidden_field :path, value: @path %>
 
     <%= f.label :description %>
     <%= f.text_field :description %>
