@@ -15,21 +15,23 @@ class ItemsController<ApplicationController
 
   def new
     @merchant = Merchant.find(params[:merchant_id] ||= User.find(session[:user_id]).merchant.id)
+    @item = Item.new
   end
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    item = @merchant.items.create(item_params)
-    if item.save
+    @item = @merchant.items.create(item_params)
+    if @item.save
       redirect_to "#{admin_router}/#{merchant_router}/items"
     else
-      flash[:error] = item.errors.full_messages.to_sentence
+      flash[:error] = @item.errors.full_messages.to_sentence
       render :new
     end
   end
 
   def edit
     @item = Item.find(params[:id])
+    @merchant = @item.merchant
   end
 
   def update
@@ -53,7 +55,7 @@ class ItemsController<ApplicationController
   private
 
   def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
+    params.require(:item).permit(:name,:description,:price,:inventory,:image)
   end
 
 
