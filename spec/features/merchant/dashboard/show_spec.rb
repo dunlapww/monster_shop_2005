@@ -52,5 +52,13 @@ feature 'As a merchant' do
       click_link("My Merchant Items")
       expect(current_path).to eq('/merchant/items')
     end
+
+    it "when I click on an order link, I am directed to the merchant order show page: /merchant/orders/order_id" do
+      visit '/merchant'
+      within("#order-#{@order1.id}") do
+        click_link("#{@order1.id}")
+      end
+      expect(current_path).to eq("/merchant/orders/#{@order1.id}")
+    end
   end
 end
