@@ -21,11 +21,11 @@ feature 'As a merchant employee' do
           visit '/merchant/items'
           expect(page).to have_link('Add New Item')
           click_link('Add New Item')
-          fill_in :name, with: name
-          fill_in :price, with: price
-          fill_in :description, with: description
-          fill_in :image, with: image_url
-          fill_in :inventory, with: inventory
+          fill_in :Name, with: name
+          fill_in :Price, with: price
+          fill_in :Description, with: description
+          fill_in :Image, with: image_url
+          fill_in :Inventory, with: inventory
         end
       end
       describe 'When I submit valid information and submit the form' do
@@ -37,11 +37,11 @@ feature 'As a merchant employee' do
           inventory = 25
           visit '/merchant/items'
           click_link('Add New Item')
-          fill_in :name, with: name
-          fill_in :price, with: price
-          fill_in :description, with: description
-          fill_in :image, with: image_url
-          fill_in :inventory, with: inventory
+          fill_in :Name, with: name
+          fill_in :Price, with: price
+          fill_in :Description, with: description
+          fill_in :Image, with: image_url
+          fill_in :Inventory, with: inventory
           click_button "Create Item"
 
           new_item = Item.last
@@ -72,36 +72,36 @@ feature 'As a merchant employee' do
           click_link('Add New Item')
         end
         it 'no name' do
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
           click_button "Create Item"
           expect(page).to have_content("Name can't be blank")
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
         end
         it 'no description' do
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
           click_button "Create Item"
           expect(page).to have_content("Description can't be blank")
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
         end
         it 'no picture' do
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Inventory, with: @inventory
           click_button "Create Item"
           new_item = Item.last
           expect(current_path).to eq("/merchant/items")
@@ -119,32 +119,44 @@ feature 'As a merchant employee' do
           expect(page).to have_content("Inventory: #{new_item.inventory}")
         end
         it 'Price = 0' do
-          fill_in :name, with: @name
-          fill_in :price, with: 0
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: 0
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
           click_button "Create Item"
           expect(page).to have_content("Price must be greater than 0")
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
         end
         it 'inventory = -1' do
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: -1
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: -1
           click_button "Create Item"
           expect(page).to have_content("Inventory must be greater than or equal to 0")
-          fill_in :name, with: @name
-          fill_in :price, with: @price
-          fill_in :description, with: @description
-          fill_in :image, with: @image_url
-          fill_in :inventory, with: @inventory
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: @inventory
+        end
+        it 'has popluated fields after failure' do
+          fill_in :Name, with: @name
+          fill_in :Price, with: @price
+          fill_in :Description, with: @description
+          fill_in :Image, with: @image_url
+          fill_in :Inventory, with: -1
+          click_button "Create Item"
+          expect(page).to have_field :Name, with: @name
+          expect(page).to have_field :Price, with: @price
+          expect(page).to have_field :Description, with: @description
+          expect(page).to have_field :Image, with: @image_url
         end
       end
     end
