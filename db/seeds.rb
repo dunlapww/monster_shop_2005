@@ -43,7 +43,7 @@ pencil = mike.items.create!(name: "Pencil",
   inventory: 2000)
 
 #users
-user1 = User.create!({password: "Bobpass",
+user1 = bike_shop.users.create!({password: "Bobpass",
                      name: "Bobname",
                      address: "Bobaddress",
                      city: "Bobcity",
