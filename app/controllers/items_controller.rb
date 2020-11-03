@@ -14,14 +14,14 @@ class ItemsController<ApplicationController
   end
 
   def new
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = Merchant.find(params[:merchant_id] ||= User.find(session[:user_id]).merchant.id)
   end
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
     item = @merchant.items.create(item_params)
     if item.save
-      redirect_to "#{admin_router}/merchants/#{@merchant.id}/items"
+      redirect_to "#{admin_router}/#{merchant_router}/items"
     else
       flash[:error] = item.errors.full_messages.to_sentence
       render :new

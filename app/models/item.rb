@@ -1,4 +1,6 @@
 class Item <ApplicationRecord
+  before_save :fill_in_blank_image
+
   belongs_to :merchant
   has_many :reviews, dependent: :destroy
   has_many :item_orders
@@ -7,10 +9,10 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
+  validates_numericality_of :inventory, greater_than_or_equal_to: 0
 
 
   def average_review
@@ -39,6 +41,10 @@ class Item <ApplicationRecord
     .group(:name)
     .order("total_quantity")
     .limit(5)
+  end
+
+  def fill_in_blank_image
+    self.image = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png' if image == ""
   end
 
 end

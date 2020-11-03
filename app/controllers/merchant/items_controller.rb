@@ -1,6 +1,7 @@
-class Merchant::ItemsController < ApplicationController
+class Merchant::ItemsController < ItemsController
   def index
     @items = User.find(session[:user_id]).merchant.items
+    @merchant = User.find(session[:user_id]).merchant
   end
 
   def update

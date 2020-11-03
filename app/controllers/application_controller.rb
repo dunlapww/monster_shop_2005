@@ -30,4 +30,12 @@ class ApplicationController < ActionController::Base
   def admin_router
     '/admin' if current_admin?
   end
+
+  def merchant_router
+    if current_user && current_user.merchant_employee?
+      'merchant'
+    else
+      "merchants/#{@merchant.id}"
+    end
+  end
 end
