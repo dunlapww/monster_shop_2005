@@ -129,11 +129,12 @@ feature 'Merchant employee merchant index' do
           click_button("Delete")
         end
 
-        expect(page).to have_content("Item #{@item4.id} Deleted")
-        expect(page).to_not have_content(@item4.name)
-        expect(page).to_not have_content(@item4.description)
-        expect(page).to_not have_content("#{@item4.price.round(2)}")
-        expect(page).to_not have_content(@item4.inventory)
+        expect(page).to have_no_selector("#item-#{@item4.id}")
+        # expect(page).to have_content("Item #{@item4.id} Deleted")
+        # expect(page).to_not have_content(@item4.name)
+        # expect(page).to_not have_content(@item4.description)
+        # expect(page).to_not have_content("#{@item4.price.round(2)}")
+        # expect(page).to_not have_content(@item4.inventory)
       end
     end
   end
