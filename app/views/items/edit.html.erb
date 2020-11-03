@@ -1,22 +1,25 @@
 <h1>Edit <%=link_to @item.name, "/items/#{@item.id}" %></h1>
 
 <center>
-  <%= form_tag "/items/#{@item.id}", method: :patch  do %>
-    <%= label_tag :name %>
-    <%= text_field_tag :name, "#{@item.name}"%>
+  <%= form_with model: @item, url: "/items/#{@item.id}", method: :patch do |f| %>
 
-    <%= label_tag :description %>
-    <%= text_field_tag :description, "#{@item.description}" %>
+    <%= f.label :name %>
+    <%= f.text_field :name%>
 
-    <%= label_tag :price %>
-    <%= text_field_tag :price, "#{number_to_currency(@item.price)}" %>
+    <%= f.hidden_field :path, value: @path %>
 
-    <%= label_tag :image %>
-    <%= text_field_tag :image, "#{@item.image}" %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
 
-    <%= label_tag :inventory %>
-    <%= text_field_tag :inventory, "#{@item.inventory}" %>
+    <%= f.label :price %>
+    <%= f.text_field :price, value: "#{number_to_currency(@item.price)}"%>
 
-    <%= submit_tag 'Update Item' %>
+    <%= f.label :image %>
+    <%= f.text_field :image %>
+
+    <%= f.label :inventory %>
+    <%= f.text_field :inventory %>
+
+    <%= f.submit('Update Item') %>
   <% end %>
 </center>

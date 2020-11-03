@@ -19,4 +19,10 @@ class Merchant::ItemsController < ItemsController
     flash[:success] = "Item #{item.id} Deleted"
     redirect_to '/merchant/items'
   end
+
+  def edit
+    @item = Item.find(params[:id])
+    @merchant = @item.merchant
+    @path = "/merchant/items"
+  end
 end
