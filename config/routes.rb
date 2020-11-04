@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :orders, only: :show
   end
 
+  resources :item_orders, only: :update
+
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
