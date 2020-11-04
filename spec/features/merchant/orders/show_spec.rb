@@ -110,6 +110,17 @@ feature "As a merchant employee" do
         expect(page).to have_content("Fulfilled!")
       end
     end
+    it 'if user qty is greater than current inventory then it display note saying as much' do
+      @io2.item.update(inventory: 0)
+      @io2.reload
+      
+      visit "/merchant/orders/#{@order1.id}"
+      
+      within("#io-#{@io2.id}") do
+        expect(page).to_not have_button("Fulfill")
+        expect(page).to have_content("Insufficient Inventory")
+      end
+    end
   end
 
   #   If the user's desired quantity is equal to or less than my current inventory quantity for that item
@@ -120,6 +131,10 @@ feature "As a merchant employee" do
   # - I also see a flash message indicating that I have fulfilled that item
   # - the item's inventory quantity is permanently reduced by the user's desired quantity
 
-  # If I have already fulfilled this item, I see text indicating such.
+#   # If I have already fulfilled this item, I see text indicating such.
+
+#   If the user's desired quantity is greater than my current inventory quantity for that item
+# Then I do not see a "fulfill" button or link
+# Instead I see a notice next to the item indicating I cannot fulfill this item
 
 end
