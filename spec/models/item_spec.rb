@@ -27,6 +27,24 @@ describe Item, type: :model do
       @review_5 = @chain.reviews.create(title: "Okay place :/", content: "Brian's cool and all but just an okay selection of items", rating: 3)
     end
 
+    it '#ok_to_fulfill' do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      bad_tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 0)
+      fulfilled_tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 0)
+      user = create(:user)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
+      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
+      item_order_2 = order_1.item_orders.create!(item: bad_tire, price: tire.price, quantity: 2)
+      item_order_3 = order_1.item_orders.create!(item: fulfilled_tire, price: tire.price, quantity: 2, status: 'fulfilled')
+      meg_items = order_1.merchant_item_orders(meg.id)
+
+      expect(meg_items[0].ok_to_fulfill?).to eq(true)
+      expect(meg_items[1].ok_to_fulfill?).to eq(false)
+      expect(meg_items[2].ok_to_fulfill?).to eq(false)
+
+    end
+
     it "calculate average review" do
       expect(@chain.average_review).to eq(3.0)
     end

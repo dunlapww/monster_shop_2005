@@ -54,6 +54,7 @@ feature "As a merchant employee" do
        end
        expect(page).to_not have_selector("#io-#{@io3.id}")
     end
+
     it "when I click on an item link, I'm directed to the item's show page" do
       visit "/merchant/orders/#{@order1.id}"
       within("#io-#{@io1.id}") do
@@ -61,5 +62,64 @@ feature "As a merchant employee" do
       end
       expect(current_path).to eq("/items/#{@io1.item.id}")
     end
+
+    it "I see a button next to each order item that says 'fulfill' if i have the inventory and it's not yet fulfilled" do
+      @io2.item.update(inventory: 0)
+      @io2.reload
+      
+      visit "/merchant/orders/#{@order1.id}"
+      
+      within("#io-#{@io1.id}") do
+        expect(page).to have_button("Fulfill")
+      end
+      within("#io-#{@io2.id}") do
+        expect(page).to_not have_button("Fulfill")
+      end
+    end
+
+    it "I see a flash message that I have fulfilled the item" do
+      visit "/merchant/orders/#{@order1.id}"
+
+      within("#io-#{@io1.id}") do
+        click_on("Fulfill")
+      end
+      expect(current_path).to eq("/merchant/orders/#{@order1.id}")
+      expect(page).to have_content("Item Order Fulfilled!")
+    end
+    it "the order item inventory is reduced by the quantity on the order" do
+      visit "/merchant/orders/#{@order1.id}"
+
+      current_inventory = @io1.item.inventory
+
+      within("#io-#{@io1.id}") do
+        click_on("Fulfill")
+      end
+      @io1.reload
+      expect(@io1.item.inventory).to eq(current_inventory - @io1.quantity)
+    end
+    it "if item has been fulfilled, then i see a note 'fulfilled' next to the item" do
+      visit "/merchant/orders/#{@order1.id}"
+
+      current_inventory = @io1.item.inventory
+
+      within("#io-#{@io1.id}") do
+        click_on("Fulfill")
+      end
+
+      within("#io-#{@io1.id}") do
+        expect(page).to have_content("Fulfilled!")
+      end
+    end
   end
+
+  #   If the user's desired quantity is equal to or less than my current inventory quantity for that item
+  # And I have not already "fulfilled" that item:
+  # - Then I see a button or link to "fulfill" that item
+  # - When I click on that link or button I am returned to the order show page
+  # - I see the item is now fulfilled
+  # - I also see a flash message indicating that I have fulfilled that item
+  # - the item's inventory quantity is permanently reduced by the user's desired quantity
+
+  # If I have already fulfilled this item, I see text indicating such.
+
 end
