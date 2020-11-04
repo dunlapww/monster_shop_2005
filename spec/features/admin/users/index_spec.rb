@@ -37,5 +37,15 @@ feature 'Admin user index' do
         expect(page).to have_link(@user3.name)
       end
     end
+
+    it 'I click a users name and it take me to their show page' do
+      visit('/admin/users')
+
+      within("#user-#{@user2.id}") do
+        click_link(@user2.name)
+      end
+
+      expect(current_path).to eq("/admin/users/#{@user2.id}")
+    end
   end
 end
