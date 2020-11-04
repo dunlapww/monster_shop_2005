@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   #patch '/merchant/items', to: 'merchant/items#update'
   namespace :merchant do
     resources :items, except: [:show]
+    resources :orders, only: :show
   end
 
   get "/items", to: "items#index"

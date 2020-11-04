@@ -29,6 +29,18 @@ describe Order, type: :model do
       
     end
 
+    it '#merchant_items' do
+      steve = Merchant.create(name: "Steve's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
+      fat_tire = @meg.items.create(name: "huge tire", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      io_fat_tire = @order_1.item_orders.create!(item: fat_tire, price: fat_tire.price, quantity: 4)
+      
+      expect(@order_1.merchant_item_orders(@meg.id).size).to eq(2)
+      expect(@order_1.merchant_item_orders(@meg).first.item_order_id).to eq(@io_tire.id)
+      expect(@order_1.merchant_item_orders(@meg).last.item_order_id).to eq(io_fat_tire.id)
+      expect(@order_1.merchant_item_orders(steve.id)).to eq([])
+    end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end

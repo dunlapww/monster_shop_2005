@@ -37,4 +37,8 @@ class Order <ApplicationRecord
   def can_be_cancelled?
     status == "pending" || status == "packaged"
   end
+  
+  def merchant_item_orders(merchant_id)
+    items.select("item_orders.quantity as quantity, items.*, items.id as item_id, item_orders.id as item_order_id").where("items.merchant_id = ?", merchant_id)
+  end
 end
