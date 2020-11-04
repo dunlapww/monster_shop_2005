@@ -27,8 +27,27 @@ feature 'Admin merchant index' do
       create(:item, merchant_id: @merchant3.id, active?: false)
     end
 
+    it 'I see the merchants city and state' do
+      visit '/admin/merchants'
+      within("#merchant-#{@merchant1.id}") do
+        expect(page).to have_content(@merchant1.name)
+        expect(page).to have_content(@merchant1.city)
+        expect(page).to have_content(@merchant1.state)
+      end
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_content(@merchant2.name)
+        expect(page).to have_content(@merchant2.city)
+        expect(page).to have_content(@merchant2.state)
+      end
+      within("#merchant-#{@merchant3.id}") do
+        expect(page).to have_content(@merchant3.name)
+        expect(page).to have_content(@merchant3.city)
+        expect(page).to have_content(@merchant3.state)
+      end
+    end
+    
     it 'I see a list of merchants' do
-      visit '/merchants'
+      visit 'admin/merchants'
       click_link("#{@merchant1.name}")
       expect(current_path).to eq("/admin/merchants/#{@merchant1.id}")
     end
