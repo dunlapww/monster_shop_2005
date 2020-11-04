@@ -47,4 +47,8 @@ class Item <ApplicationRecord
     self.image = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png' if image == ""
   end
 
+  def ok_to_fulfill?
+    self.status != "fulfilled"  && self.inventory >= self.quantity
+  end
+
 end
