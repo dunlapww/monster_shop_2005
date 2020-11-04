@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
     render file: '/public/404' if current_admin?
   end
 
+  def require_admin
+    render file: '/public/404' if !current_admin?
+  end
+
   def current_user?
     render file: '/public/404' unless current_user
   end
