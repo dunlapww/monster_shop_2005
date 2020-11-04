@@ -33,6 +33,7 @@
             <td><p><%= number_to_currency(item.price)%></p></td>
             <td><p><%= item.quantity%></p></td>
             <td><p><%= button_to("Fulfill", "/item_orders/#{item.item_order_id}", method: :patch) if item.ok_to_fulfill? %></p></td>
+            <td><p><%= "Insufficient Inventory" if item.inventory < item.quantity %></p></td>
             <td><p><%= "Fulfilled!" if item.status == 'fulfilled' %></p></td>
         </section>
       </tr>
