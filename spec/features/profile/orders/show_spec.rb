@@ -33,7 +33,7 @@ feature 'user show page' do
           item2 = @order1.items.second
           item_order1 = @order1.item_orders.first
           item_order2 = @order1.item_orders.second
-
+          
           within("#item-#{item_order1.item_id}") do
             expect(page).to have_content("#{item1.name}")
             expect(page).to have_content("#{item1.description}")
@@ -47,7 +47,7 @@ feature 'user show page' do
             expect(page).to have_content("#{item2.description}")
             expect(page).to have_content("#{item2.image}")
             expect(page).to have_content("#{item_order2.quantity}")
-            expect(page).to have_content("#{item_order2.subtotal.round(2)}")
+            expect(page).to have_content("#{ActionController::Base.helpers.number_to_currency(item_order2.subtotal)}")
           end
         end
         it "has button to cancel order" do
