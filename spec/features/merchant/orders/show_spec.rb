@@ -21,12 +21,12 @@ feature "As a merchant employee" do
     @merchant1.users << @merchant_employee
     @customer1 = create(:user)
     @order1 = create(:order, user_id: @customer1.id)
-    @item1 = create(:item, merchant_id: @merchant1.id)
-    @item2 = create(:item, merchant_id: @merchant1.id)
-    @item3 = create(:item, merchant_id: @merchant2.id)
-    @io1 = create(:item_order, order_id: @order1.id, item_id: @item1.id)
-    @io2 = create(:item_order, order_id: @order1.id, item_id: @item2.id)
-    @io3 = create(:item_order, order_id: @order1.id, item_id: @item3.id)
+    @item1 = create(:item, merchant_id: @merchant1.id, inventory: 10)
+    @item2 = create(:item, merchant_id: @merchant1.id, inventory: 10)
+    @item3 = create(:item, merchant_id: @merchant2.id, inventory: 10)
+    @io1 = create(:item_order, order_id: @order1.id, item_id: @item1.id, quantity: 1)
+    @io2 = create(:item_order, order_id: @order1.id, item_id: @item2.id, quantity: 1)
+    @io3 = create(:item_order, order_id: @order1.id, item_id: @item3.id, quantity: 1)
   end
   describe "When I visit an order show page" do
     it "I see the recipients name and address that was used to create this order" do
@@ -110,6 +110,30 @@ feature "As a merchant employee" do
         expect(page).to have_content("Fulfilled!")
       end
     end
+    it 'if user qty is greater than current inventory then it display note saying as much' do
+      @io2.item.update(inventory: 0)
+      @io2.reload
+      
+      visit "/merchant/orders/#{@order1.id}"
+      
+      within("#io-#{@io2.id}") do
+        expect(page).to_not have_button("Fulfill")
+        expect(page).to have_content("Insufficient Inventory")
+      end
+    end
+    it 'test case' do
+      @io2.update(status: 'fulfilled')
+      @io2.item.update(inventory: 1000)
+      @io2.reload
+
+      visit "/merchant/orders/#{@order1.id}"
+      
+      within("#io-#{@io2.id}") do
+        expect(page).to_not have_button("Fulfill")
+        expect(page).to_not have_content("Insufficient Inventory")
+        expect(page).to have_content("Fulfilled!")
+      end
+    end
   end
 
   #   If the user's desired quantity is equal to or less than my current inventory quantity for that item
@@ -120,6 +144,10 @@ feature "As a merchant employee" do
   # - I also see a flash message indicating that I have fulfilled that item
   # - the item's inventory quantity is permanently reduced by the user's desired quantity
 
-  # If I have already fulfilled this item, I see text indicating such.
+#   # If I have already fulfilled this item, I see text indicating such.
+
+#   If the user's desired quantity is greater than my current inventory quantity for that item
+# Then I do not see a "fulfill" button or link
+# Instead I see a notice next to the item indicating I cannot fulfill this item
 
 end
