@@ -29,7 +29,7 @@
       <tr>
         <section id = "io-<%=item.item_order_id%>">
             <td><p><%=link_to item.name, "/items/#{item.item_id}"%></p></td>
-            <td><p><%= item.image%></p></td>
+            <td><img src=<%= item.image%> alt="item image"></td>
             <td><p><%= number_to_currency(item.price)%></p></td>
             <td><p><%= item.quantity%></p></td>
             <td><p><%= button_to("Fulfill", "/item_orders/#{item.item_order_id}", method: :patch) if item.ok_to_fulfill? %></p></td>

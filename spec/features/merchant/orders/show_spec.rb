@@ -42,7 +42,8 @@ feature "As a merchant employee" do
       visit "/merchant/orders/#{@order1.id}"
        within("#io-#{@io1.id}") do
         expect(page).to have_link("#{@item1.name}")
-        expect(page).to have_css("img[src*='#{@item1.image}']")
+        #expect(page).to have_css("img[src*='#{@item1.image}']")
+        expect(page).to have_xpath("//img[@src='#{@item1.image}']")
         expect(page).to have_content("#{@item1.price.round(2)}")
         expect(page).to have_content("#{@io1.quantity}")
        end

@@ -1,10 +1,12 @@
 class MerchantsController < ApplicationController
+
   def index
     @merchants = Merchant.not_disabled
     @admin = current_admin?
   end
 
   def show
+    #render file: "/public/404" unless current_user.merchant.id == params[:id])
     @merchant = Merchant.find(params[:id])
   end
 
