@@ -172,7 +172,7 @@ feature 'As a merchant employee' do
           fill_in :Inventory, with: -1
           click_button "Update Item"
           expect(page).to have_field :Name, with: @name
-          expect(page).to have_field :Price, with: "$#{@price}"
+          expect(page).to have_field :Price, with: "#{@price}"
           expect(page).to have_field :Description, with: @description
           expect(page).to have_field :Image, with: @image_url
         end
