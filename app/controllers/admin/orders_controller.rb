@@ -1,4 +1,6 @@
 class Admin::OrdersController < ApplicationController
+  before_action :require_admin
+
   def index
     @user = User.find(params[:user_id])
   end
