@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def new
     if current_user
+      flash[:notice] = "You are already logged in"
       redirect_to '/profile' if current_user.role == "default"
       redirect_to '/merchant' if current_user.role == "merchant_employee"
       redirect_to '/admin' if current_user.role == "admin"
