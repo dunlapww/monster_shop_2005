@@ -69,7 +69,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :orders, only: :update
     resources :merchants, only: [:show, :index, :update]
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show] do
+      resources :orders, only: :index
+    end
     resources :merchants, only: :show do
       resources :items, only: [:index, :new]
     end

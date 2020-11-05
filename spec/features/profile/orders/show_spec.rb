@@ -39,7 +39,7 @@ feature 'user show page' do
             expect(page).to have_content("#{item1.description}")
             expect(page).to have_content("#{item1.image}")
             expect(page).to have_content("#{item_order1.quantity}")
-            expect(page).to have_content("#{item_order1.subtotal.round(2)}")
+            expect(page).to have_content("#{ActionController::Base.helpers.number_to_currency(item_order1.subtotal)}")
           end
 
           within("#item-#{item_order2.item_id}") do
@@ -62,7 +62,7 @@ feature 'user show page' do
                                       price: 20,
                                       image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png",
                                       inventory: 25)
-          item1_inventory = paper.inventory
+          paper.inventory
 
           item_order1 = ItemOrder.create!(order_id: order.id,
                            item_id: paper.id,
