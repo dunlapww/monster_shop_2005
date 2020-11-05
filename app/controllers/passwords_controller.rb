@@ -9,7 +9,7 @@ class PasswordsController < ApplicationController
       flash[:success] = "Your password has been updated"
       redirect_to '/profile'
     else
-      flash[:error] = @user.errors.full_messages.to_sentence
+      flash.now[:error] = @user.errors.full_messages.to_sentence
       render :edit
     end
   end

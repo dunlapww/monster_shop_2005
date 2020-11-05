@@ -24,7 +24,7 @@ class ItemsController<ApplicationController
     if @item.save
       redirect_to "#{admin_router}/#{merchant_router}/items"
     else
-      flash[:error] = @item.errors.full_messages.to_sentence
+      flash.now[:error] = @item.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -43,7 +43,7 @@ class ItemsController<ApplicationController
       redirect_to "#{params[:item][:path]}"
     else
       @path = params[:item][:path]
-      flash[:error] = @item.errors.full_messages.to_sentence
+      flash.now[:error] = @item.errors.full_messages.to_sentence
       render :edit
     end
   end
