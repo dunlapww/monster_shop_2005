@@ -1,7 +1,7 @@
 <h1>Edit <%=link_to @item.name, "/items/#{@item.id}" %></h1>
 
 <center>
-  <%= form_with model: @item, url: "/items/#{@item.id}", method: :patch do |f| %>
+  <%= form_with model: @item, url: "/items/#{@item.id}", local: true, method: :patch do |f| %>
 
     <%= f.label :name %>
     <%= f.text_field :name%>
@@ -12,7 +12,7 @@
     <%= f.text_field :description %>
 
     <%= f.label :price %>
-    <%= f.text_field :price, value: "#{number_to_currency(@item.price)}"%>
+    <%= f.text_field :price, value: "#{@item.price.round(2)}"%>
 
     <%= f.label :image %>
     <%= f.text_field :image %>
