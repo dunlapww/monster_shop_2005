@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       redirect_to "/profile"
     else
       flash.now[:error] = @user.errors.full_messages.to_sentence
-      @user.email_address = nil
+      @user.email_address = nil if User.find_by(email_address: user_params[:email_address])
       render action: "new"
     end
   end
