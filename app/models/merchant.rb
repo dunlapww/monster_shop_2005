@@ -12,6 +12,10 @@ class Merchant <ApplicationRecord
                         :zip
 
 
+  def self.not_disabled
+    where.not(active?: false)
+  end
+
   def no_orders?
     item_orders.empty?
   end
@@ -36,6 +40,7 @@ class Merchant <ApplicationRecord
     self.toggle!(:active?)
     switch_items_active_status
   end
+
 
   def switch_items_active_status
     if self.active?

@@ -1,6 +1,6 @@
 class MerchantsController < ApplicationController
   def index
-    @merchants = Merchant.all
+    @merchants = Merchant.not_disabled
     @admin = current_admin?
   end
 
