@@ -8,7 +8,7 @@
 
 <% @merchant.pending_orders.each do |order| %>
   <div id="order-<%= order.id %>">
-    <%= link_to "#{order.id}", "/merchant/orders/#{order.id}" %>
+    Order: <%= link_to "#{order.id}", "/merchant/orders/#{order.id}" %>
     <%= order.created_at.to_date %>
     <%= order.merchant_items_qty(@merchant.id) %>
     <%= order.merchant_items_value(@merchant.id) %>
