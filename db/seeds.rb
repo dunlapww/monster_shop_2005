@@ -28,6 +28,7 @@ pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 squeaky_toy = dog_shop.items.create(name: "Squeaky Toy", description: "They'll love it!", price: 25, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 42)
 chew_toy = dog_shop.items.create(name: "Chew Toy", description: "They'll love it!", price: 11, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 15)
+rope = dog_shop.items.create(name: "Rope", description: "They'll love it!", price: 13, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 25)
 
 #mike's items
 paper = mike.items.create!(name: "Lined Paper",
