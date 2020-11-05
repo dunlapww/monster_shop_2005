@@ -20,5 +20,12 @@ feature 'Admin user show' do
 
       expect(page).to have_link("User's Orders")
     end
+
+    it "I can click on a link to see that user's orders" do
+      visit "/admin/users/#{@user.id}"
+      click_link("User's Orders")
+      
+      expect(current_path).to eq("/admin/users/#{@user.id}/orders")
+    end
   end
 end

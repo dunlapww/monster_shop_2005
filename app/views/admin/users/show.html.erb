@@ -4,4 +4,4 @@
 <%= @user.state %><br>
 <%= @user.zip %><br>
 <%= @user.email_address %><br>
-<%= link_to "User's Orders", "/" %>
+<%= link_to "User's Orders", "/admin/users/#{@user.id}/orders" %>
