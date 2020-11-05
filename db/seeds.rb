@@ -52,7 +52,7 @@ user1 = bike_shop.users.create!({password: "Bobpass",
                      email_address: "Bobemail",
                      password_confirmation: "Bobpass",
                      role: 1})
-user2 = User.create!({password: "Eugenepass",
+user2 = dog_shop.users.create!({password: "Eugenepass",
                      name: "Eugenename",
                      address: "Eugeneaddress",
                      city: "Eugenecity",
@@ -69,7 +69,7 @@ user3 = User.create!({password: "Connorpass",
                      zip: "Connorzip",
                      email_address: "Connoremail",
                      password_confirmation: "Connorpass",
-                     role: 1})
+                     role: 2})
 user4 = User.create!({password: "Willpass",
                      name: "Willname",
                      address: "Willaddress",
@@ -78,7 +78,7 @@ user4 = User.create!({password: "Willpass",
                      zip: "Willzip",
                      email_address: "Willemail",
                      password_confirmation: "Willpass",
-                     role: 1})
+                     role: 0})
 user5 = User.create!({password: "Jessepass",
                      name: "Jessename",
                      address: "Jesseaddress",
@@ -87,7 +87,7 @@ user5 = User.create!({password: "Jessepass",
                      zip: "Jessezip",
                      email_address: "Jesseemail",
                      password_confirmation: "Jessepass",
-                     role: 1})
+                     role: 0})
 user6 = User.create!({password: "Timpass",
                      name: "Timname",
                      address: "Timaddress",
@@ -96,7 +96,7 @@ user6 = User.create!({password: "Timpass",
                      zip: "Timzip",
                      email_address: "Timemail",
                      password_confirmation: "Timpass",
-                     role: 1})
+                     role: 0})
 
 user1_order1 = user1.orders.create!(name: "Stuff",
                            address: "There",
