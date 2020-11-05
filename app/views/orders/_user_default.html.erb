@@ -1,23 +1,23 @@
 <section id="dateupdate">
-  <p> <%= order.updated_at.strftime("%m-%d-%Y")%></p>
+  <p>Order Updated: <%= order.updated_at.strftime("%m-%d-%Y")%></p>
 </section>
 
 <section id="status">
-<p> <%= order.status%></p>
+<p>Order Status: <%= order.status%></p>
 </section>
 
 <section id="order-quantity_of_items">
-  <p> <%= order.quantity_of_items%></p>
+  <p>Quantity of items: <%= order.quantity_of_items%></p>
 </section>
 
 <section id="order-<%= order.id %>">
-  <p> <%= order.id%></p>
+  <p>Order ID: <%= order.id%></p>
 </section>
 
 <p id="grandtotal">Total: <%=number_to_currency(order.grandtotal)%></p>
 
 <section id="datecreated">
-<p> <%= order.created_at.strftime("%m-%d-%Y")%></p>
+<p>Order Created: <%= order.created_at.strftime("%m-%d-%Y")%></p>
 </section>
 
 
